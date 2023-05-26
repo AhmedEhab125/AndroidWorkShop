@@ -1,4 +1,7 @@
 package com.example.myapplication.model
 
-interface RepositoryInterface {
+import com.example.myapplication.network.RemoteSourceInter
+
+interface RepositoryInterface :RemoteSourceInter{
+
 }

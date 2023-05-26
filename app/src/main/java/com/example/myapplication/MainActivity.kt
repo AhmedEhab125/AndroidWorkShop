@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.model.SignUpModel
 import com.example.myapplication.network.RemoteSource
 import com.example.myapplication.network.RemoteSourceInter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
        var network : RemoteSourceInter = RemoteSource()
-            var data = network.registerUser(SignUpModel("ahmjogasdasggasdj@gmail.com","Ajods213sa!","ahmed"))
+        lifecycleScope.launch(Dispatchers.IO) {
+            var data = network.registerUser(SignUpModel("ahmjogasdadfdsggasdj@gmail.com","Ajods213sa!","ahmed"))
+
+        }
 
          //   print(data)
 
