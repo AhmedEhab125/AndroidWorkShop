@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class RemoteSource : RemoteSourceInter {
 
-    override suspend fun registerUser(requestBody: SignUpModel) : RetriveData {
+    override suspend fun registerUser(requestBody: SignUpModel) : RetriveData? {
 
     return   RetrofitClient.getInstance().registerUser(requestBody =requestBody ).execute().body()
 

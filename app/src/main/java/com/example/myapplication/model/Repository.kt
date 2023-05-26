@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class Repository(var remoteSourceInter: RemoteSourceInter) :RepositoryInterface {
 
-    override suspend fun registerUser(requestBody: SignUpModel): Flow<RetriveData?> {
-       return remoteSourceInter.registerUser(requestBody)
+    override suspend fun registerUser(requestBody: SignUpModel): RetriveData? {
+       return  remoteSourceInter.registerUser(requestBody)
     }
 }
