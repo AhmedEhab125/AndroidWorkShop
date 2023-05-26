@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if ( UserInfoDataSource.getInstance().readFromShared(applicationContext) != null){
-            Toast.makeText(applicationContext,"User Alerady Login",Toast.LENGTH_LONG).show()
             println("User Aleardy Login")
         }
 
