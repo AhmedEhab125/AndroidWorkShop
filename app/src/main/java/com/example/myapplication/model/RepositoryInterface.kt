@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryInterface :RemoteSourceInter{
     override suspend fun registerUser(requestBody: SignUpModel) : RetriveData
-    suspend fun getUserNameAndPassword(): LoginUser
+    suspend fun getUserNameAndPassword(userName:String,password:String): ApiState
 }
