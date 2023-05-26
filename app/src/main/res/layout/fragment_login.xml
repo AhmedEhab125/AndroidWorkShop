@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passLogin" />
 
     <Button
-        android:id="@+id/loginBtn2"
+        android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -83,6 +83,31 @@
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+    <TextView
+        android:id="@+id/emailWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="13dp"
+        android:textColor="#F80404"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/passLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+
+    <TextView
+        android:id="@+id/passwordWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#EC0B0B"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
