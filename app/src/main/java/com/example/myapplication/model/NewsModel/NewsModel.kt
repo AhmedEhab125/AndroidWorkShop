@@ -1,6 +1,6 @@
 package com.example.myapplication.model
 
-data class NewsModelData(
+data class NewsModel(
 
     var status: String? = null,
     var totalResults: Int? = null,

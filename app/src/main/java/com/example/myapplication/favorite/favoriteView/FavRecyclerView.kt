@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.FavIteamBinding
+import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsModel
 
-class FavRecyclerView(var newsList: List<NewsModel>) :
+class FavRecyclerView(var newsList: List<Articles>) :
     RecyclerView.Adapter<FavRecyclerView.ViewHolder>() {
     lateinit var binding: FavIteamBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,15 +18,15 @@ class FavRecyclerView(var newsList: List<NewsModel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.tvFavTitle.text= newsList[position].newsTitle
-        holder.binding.tvFavDiscribtion.text = newsList[position].newsDescription
-        Glide.with(binding.root).load(newsList[position].newsImg).into(holder.binding.ivFavNews)
+        holder.binding.tvFavTitle.text= newsList[position].title
+        holder.binding.tvFavDiscribtion.text = newsList[position].description
+        Glide.with(binding.root).load(newsList[position].urlToImage).into(holder.binding.ivFavNews)
     }
 
     override fun getItemCount(): Int {
         return newsList.size
     }
-    fun setNewsList( newsList: List<NewsModel>){
+    fun setArticlsList( newsList: List<Articles>){
         this.newsList=newsList
         notifyDataSetChanged()
     }
