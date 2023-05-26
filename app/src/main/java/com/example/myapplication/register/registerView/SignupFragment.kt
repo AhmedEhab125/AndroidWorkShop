@@ -5,13 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
-import com.example.myapplication.model.Repository
-import com.example.myapplication.model.RepositoryInterface
-import com.example.myapplication.network.RemoteSource
-import com.example.myapplication.register.registerViewModel.RegisterViewModel
-import com.example.myapplication.register.registerViewModel.RegisterViewModelFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,15 +21,9 @@ class SignupFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var viewmodel :RegisterViewModel
-    lateinit var  viewModelFactory : RegisterViewModelFactory
-    lateinit var irepo : RepositoryInterface
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        irepo=Repository(RemoteSource())
-        viewModelFactory = RegisterViewModelFactory(requireContext(),irepo)
-        viewmodel =
-            ViewModelProvider(requireActivity(), viewModelFactory).get(RegisterViewModel::class.java)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)

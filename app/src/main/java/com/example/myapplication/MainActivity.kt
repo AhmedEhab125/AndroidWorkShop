@@ -14,13 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       var network : RemoteSourceInter = RemoteSource()
-        lifecycleScope.launch(Dispatchers.IO) {
-            var data = network.registerUser(SignUpModel("ahmjogasdadfdsggasdj@gmail.com","Ajods213sa!","ahmed"))
 
-        }
-
-         //   print(data)
 
 
     }
