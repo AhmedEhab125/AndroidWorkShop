@@ -12,10 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       var network : RemoteSourceInter = RemoteSource()
-            var data = network.registerUser(SignUpModel("ahmjogasdasggasdj@gmail.com","Ajods213sa!","ahmed"))
 
-         //   print(data)
 
 
     }
