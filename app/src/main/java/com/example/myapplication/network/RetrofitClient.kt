@@ -8,10 +8,13 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create()).build()
     private val service = apiInstane.create(ApiService::class.java)
 
-    private val newsApiInstane = Retrofit.Builder().baseUrl("https://identitytoolkit.googleapis.com/")
+    private val newsApiInstane = Retrofit.Builder().baseUrl("https://newsapi.org/v2/")
         .addConverterFactory(GsonConverterFactory.create()).build()
-    private val newsService = apiInstane.create(ApiService::class.java)
+    private val newsService = newsApiInstane.create(ApiService::class.java)
     fun getInstance() :ApiService{
-        return newsService
+        return service
+    }
+    fun getArticlesInstance() :ApiService{
+        return service
     }
 }
