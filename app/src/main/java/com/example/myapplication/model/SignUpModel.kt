@@ -43,7 +43,7 @@ data class Error(
 )
 
 sealed class ApiState {
-    class Success(val date: RetriveData?) : ApiState()
+    class Success<T>(val date: T) : ApiState()
     class Failure(val err: Throwable) : ApiState()
     object Loading:ApiState()
 }
