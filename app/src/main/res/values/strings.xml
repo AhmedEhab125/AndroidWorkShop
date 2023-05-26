@@ -6,4 +6,7 @@
     <string name="emial_signup_hint">Email</string>
     <string name="pass_signup_hint">Password</string>
     <string name="confirm_pass_hint">Confirm Password</string>
+    <string name="signup_btn">SignUp</string>
+    <string name="login">Login</string>
+    <string name="signup">SignUp</string>
 </resources>
