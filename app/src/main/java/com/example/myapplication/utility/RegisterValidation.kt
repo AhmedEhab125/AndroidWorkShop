@@ -8,7 +8,7 @@ class RegisterValidation {
     }
 
     fun isPassMatching(pass: String , confPass: String) : Boolean {
-        return pass == confPass
+     return pass == confPass
     }
 
     fun isEmailValid(email: String) : Boolean {
