@@ -9,15 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
 import com.example.myapplication.model.ApiState
-import com.example.myapplication.model.Repository
-import com.example.myapplication.model.mockRepo
-import kotlinx.coroutines.launch
+import com.example.myapplication.login.model.mockRepo
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding

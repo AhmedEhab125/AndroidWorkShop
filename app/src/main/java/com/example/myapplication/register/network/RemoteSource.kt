@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.register.network
 
 import android.util.Log
 import com.example.myapplication.model.RetriveData
@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.flowOf
 
 
 class RemoteSource : RemoteSourceInter {
-
-
     override suspend fun registerUser(requestBody: SignUpModel) : RetriveData {
 
     return   RetrofitClient.getInstance().registerUser(requestBody =requestBody ).execute().body()!!

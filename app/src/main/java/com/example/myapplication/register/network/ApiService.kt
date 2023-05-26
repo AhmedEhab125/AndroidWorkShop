@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.register.network
 
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.model.SignUpModel
@@ -14,4 +14,5 @@ interface ApiService {
 
     @POST("/v1/accounts:signUp?key=AIzaSyAVRNpZKTubdM9mp3L9HaE8XGj09eNoV1o")
     fun registerUser(@Body requestBody: SignUpModel) :Call<RetriveData>
+
 }

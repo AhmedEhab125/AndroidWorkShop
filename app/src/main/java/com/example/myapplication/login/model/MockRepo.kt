@@ -1,10 +1,9 @@
-package com.example.myapplication.model
+package com.example.myapplication.login.model
 
-import com.example.myapplication.login.loginView.LoginUser
-import com.google.android.gms.common.api.Api
+import com.example.myapplication.model.*
 import kotlinx.coroutines.delay
 
-class mockRepo:RepositoryInterface {
+class mockRepo: RepositoryInterface {
     override suspend fun registerUser(requestBody: SignUpModel): RetriveData {
         TODO("Not yet implemented")
     }
