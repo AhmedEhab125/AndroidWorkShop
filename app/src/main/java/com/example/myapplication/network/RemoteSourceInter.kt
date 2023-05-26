@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface RemoteSourceInter {
-     fun registerUser(requestBody: SignUpModel) : SignUpModel
+     suspend fun registerUser(requestBody: SignUpModel) : RetriveData
 }
