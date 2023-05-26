@@ -6,8 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.model.SignUpModel
 import com.example.myapplication.network.RemoteSource
 import com.example.myapplication.network.RemoteSourceInter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {

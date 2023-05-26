@@ -10,6 +10,7 @@ data class SignUpModel(
 
 )
 
+
 data class RetriveData(
     var kind: String? = null,
     var idToken: String? = null,
@@ -47,3 +48,6 @@ sealed class ApiState {
     class Failure(val err: Throwable) : ApiState()
     object Loading:ApiState()
 }
+
+
+
