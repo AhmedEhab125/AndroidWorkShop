@@ -47,38 +47,7 @@ class SignupFragment : Fragment() {
         registerModel =
             ViewModelProvider(requireActivity(), registerFactory).get(RegisterViewModel::class.java)
 
-        registerModel.myResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is ApiState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                is ApiState.Success<*> -> {
-                    val snakbar = Snackbar.make(
-                        requireView(),
-                        "Success",
-                        Snackbar.LENGTH_LONG
-                    ).setAction("Action", null)
-                    snakbar.show()
-                    binding.progressBar.visibility = View.GONE
-                }
-
-                is ApiState.Failure -> {
-                    val snakbar = Snackbar.make(
-                        requireView(),
-                        it.err.localizedMessage,
-                        Snackbar.LENGTH_LONG
-                    ).setAction("Action", null)
-                    snakbar.show()
-                    binding.progressBar.visibility = View.GONE
-                }
-
-            }
-
-
-        }
-
-
-
+        observeResponse()
 
         binding.signUpBtn.setOnClickListener {
             binding.emailValidation.text = ""
@@ -123,6 +92,40 @@ class SignupFragment : Fragment() {
                 registerModel.getRegesterValidation(user)
 
             }
+
+        }
+    }
+
+
+
+    fun observeResponse() {
+        registerModel.myResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ApiState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is ApiState.Success<*> -> {
+                    val snakbar = Snackbar.make(
+                        requireView(),
+                        "Success",
+                        Snackbar.LENGTH_LONG
+                    ).setAction("Action", null)
+                    snakbar.show()
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ApiState.Failure -> {
+                    val snakbar = Snackbar.make(
+                        requireView(),
+                        it.err.localizedMessage,
+                        Snackbar.LENGTH_LONG
+                    ).setAction("Action", null)
+                    snakbar.show()
+                    binding.progressBar.visibility = View.GONE
+                }
+
+            }
+
 
         }
     }
