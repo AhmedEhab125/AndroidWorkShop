@@ -12,7 +12,7 @@ class mockRepo:RepositoryInterface {
     override suspend fun getUserNameAndPassword(userName:String,password:String): ApiState {
        delay(1000)
         return if(userName == "Essam" && password == "1234")
-            ApiState.Success(LoginResponse())
+            ApiState.Success(RetriveData())
         else
             ApiState.Failure(Exception("incorrect username or password"))
     }

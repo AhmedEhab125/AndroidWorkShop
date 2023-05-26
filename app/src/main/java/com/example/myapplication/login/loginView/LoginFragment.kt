@@ -16,7 +16,9 @@ import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Repository
+import com.example.myapplication.model.RetriveData
 import com.example.myapplication.model.mockRepo
+import com.example.myapplication.register.model.UserInfoDataSource
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -72,6 +74,7 @@ class LoginFragment : Fragment() {
                     Log.i("Emessage", "welcome ")
                     // progressDialog.hide()
                     Toast.makeText(requireContext(),"Welcome",Toast.LENGTH_LONG).show()
+                    UserInfoDataSource.getInstance().writeInShared(requireContext(),data.date as RetriveData)
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()
