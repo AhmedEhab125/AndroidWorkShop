@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#29304a"
+    tools:context=".register.registerView.SignupFragment" >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Sign Up "
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/name_PlanText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/name_signup_hint"
+        android:inputType="textPersonName"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:minHeight="48dp"
+        android:width="300dp"
+        android:paddingStart="20dp"
+        android:drawablePadding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/textplain_background"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/email_PlainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:width="300dp"
+        android:background="@drawable/textplain_background"
+        android:ems="10"
+        android:hint="@string/emial_signup_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:paddingStart="20dp"
+        android:drawablePadding="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/name_PlanText"
+        app:layout_constraintStart_toStartOf="@+id/name_PlanText"
+        app:layout_constraintTop_toBottomOf="@+id/name_PlanText" />
+
+    <EditText
+        android:id="@+id/pass_plainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:width="300dp"
+        android:background="@drawable/textplain_background"
+        android:ems="10"
+        android:hint="@string/pass_signup_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:paddingStart="12dp"
+        android:drawablePadding="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/email_PlainText"
+        app:layout_constraintStart_toStartOf="@+id/email_PlainText"
+        app:layout_constraintTop_toBottomOf="@+id/email_PlainText" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:cornerRadius="50dp"
+        android:width="160dp"
+        android:backgroundTint="#ef793c"
+        android:height="55dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confrm_pass_textPlain" />
+
+    <EditText
+        android:id="@+id/confrm_pass_textPlain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:width="300dp"
+        android:background="@drawable/textplain_background"
+        android:ems="10"
+        android:drawablePadding="15dp"
+        android:paddingStart="12dp"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:hint="@string/confirm_pass_hint"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/pass_plainText"
+        app:layout_constraintStart_toStartOf="@+id/pass_plainText"
+        app:layout_constraintTop_toBottomOf="@+id/pass_plainText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
