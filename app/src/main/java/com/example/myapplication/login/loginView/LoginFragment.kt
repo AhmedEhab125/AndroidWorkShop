@@ -51,8 +51,6 @@ class LoginFragment : Fragment() {
                     else -> {}
                 }
             }
-
-
         binding.loginBtn.setOnClickListener{
             progressDialog.show()
             var email = binding.loginEmail.text.toString()
