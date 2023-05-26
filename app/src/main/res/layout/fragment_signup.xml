@@ -66,7 +66,7 @@
         android:background="@drawable/textplain_background"
         android:ems="10"
         android:hint="@string/pass_signup_hint"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         android:drawableStart="@drawable/baseline_lock_24"
         android:paddingStart="12dp"
@@ -76,17 +76,19 @@
         app:layout_constraintTop_toBottomOf="@+id/email_PlainText" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signUp_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Button"
+        android:width="160dp"
+        android:height="55dp"
+        android:backgroundTint="#ef793c"
+        android:text="@string/signup_btn"
+        android:textAllCaps="false"
+        app:cornerRadius="50dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:cornerRadius="50dp"
-        android:width="160dp"
-        android:backgroundTint="#ef793c"
-        android:height="55dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confrm_pass_textPlain" />
 
@@ -102,9 +104,66 @@
         android:paddingStart="12dp"
         android:drawableStart="@drawable/baseline_lock_24"
         android:hint="@string/confirm_pass_hint"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="@+id/pass_plainText"
         app:layout_constraintStart_toStartOf="@+id/pass_plainText"
         app:layout_constraintTop_toBottomOf="@+id/pass_plainText" />
+
+    <TextView
+        android:id="@+id/name_validation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:width="300dp"
+        android:text=""
+        android:textColor="#F43636"
+
+        app:layout_constraintBottom_toTopOf="@+id/name_PlanText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/email_validation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text=""
+        android:width="300dp"
+        android:textColor="#F43636"
+
+        app:layout_constraintBottom_toTopOf="@+id/email_PlainText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pass_validation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text=""
+        android:width="300dp"
+        android:textColor="#F43636"
+
+        app:layout_constraintBottom_toTopOf="@+id/pass_plainText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/confPass_validation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text=""
+        android:width="300dp"
+        android:textColor="#F43636"
+
+        app:layout_constraintBottom_toTopOf="@+id/confrm_pass_textPlain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
