@@ -1,7 +1,8 @@
 package com.example.myapplication.model
 
-import com.example.myapplication.login.loginView.LoginUser
+import com.example.myapplication.network.RemoteSourceInter
 
-interface RepositoryInterface {
+interface RepositoryInterface :RemoteSourceInter{
+
     suspend fun getUserNameAndPassword():LoginUser
 }
