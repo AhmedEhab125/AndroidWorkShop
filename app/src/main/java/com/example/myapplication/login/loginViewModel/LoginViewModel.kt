@@ -16,10 +16,12 @@ import kotlinx.coroutines.launch
 class LoginViewModel(private val repo: RepositoryInterface): ViewModel() {
     private var _loginData: MutableLiveData<ApiState> = MutableLiveData()
     val loginData: LiveData<ApiState> = _loginData
-
+    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     fun getUserNameAndPassword(name:String , pass:String){
+        isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             _loginData.postValue(repo.getUserNameAndPassword(name,pass))
+            isLoading.postValue(false)
         }
 
     }

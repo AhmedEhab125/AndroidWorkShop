@@ -22,6 +22,8 @@ import kotlinx.coroutines.launch
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var progressDialog: ProgressDialog
+    private  lateinit var factory:LoginViewModelFactory
+    private  lateinit var viewModel:LoginViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,27 +34,12 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var factory = LoginViewModelFactory(mockRepo())
-        var viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
+        factory = LoginViewModelFactory(mockRepo())
+        viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
-            viewModel.loginData.observe(viewLifecycleOwner) { data ->
-                when(data){
-                    is ApiState.Success<*> ->{
-                        Log.i("Emessage", "welcome ")
-                        progressDialog.hide()
-                        Toast.makeText(requireContext(),"Welcome",Toast.LENGTH_LONG).show()
-                    }
-                    is ApiState.Failure -> {
-                       Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()
-                        Log.i("Emessage", "error")
-                        progressDialog.hide()
-                    }
-                    else -> {}
-                }
-            }
         binding.loginBtn.setOnClickListener{
-            progressDialog.show()
+            //progressDialog.show()
             var email = binding.loginEmail.text.toString()
             var password = binding.passLogin.text.toString()
             if(email.isNullOrEmpty()){
@@ -68,12 +55,31 @@ class LoginFragment : Fragment() {
             if(!email.isNullOrEmpty() && ! password.isNullOrEmpty()){
                 Log.i("Emessage", email+" "+password)
                 viewModel.getUserNameAndPassword(email,password)
-
+            }
+            observeAtLiveData()
+        }
+    }
+    private fun observeAtLiveData(){
+        viewModel.isLoading.observe(viewLifecycleOwner){
+            when(it){
+                true -> {progressDialog.show()}
+                else -> {progressDialog.hide()}
             }
         }
-
+        viewModel.loginData.observe(viewLifecycleOwner) { data ->
+            when(data){
+                is ApiState.Success<*> ->{
+                    Log.i("Emessage", "welcome ")
+                    // progressDialog.hide()
+                    Toast.makeText(requireContext(),"Welcome",Toast.LENGTH_LONG).show()
+                }
+                is ApiState.Failure -> {
+                    Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()
+                    Log.i("Emessage", "error")
+                    //progressDialog.hide()
+                }
+                else -> {}
+            }
+        }
     }
-
-
-
 }
