@@ -1,6 +1,8 @@
 package com.example.myapplication.home.model
 
-import com.example.myapplication.home.newsNetwork.RemoteDataSource
+import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterface
+import com.example.myapplication.model.ApiState
 
-interface NewsRepoInterface:RemoteDataSource {
+interface NewsRepoInterface {
+    fun getNewsFromApi(): ApiState
 }

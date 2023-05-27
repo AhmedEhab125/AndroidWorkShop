@@ -1,14 +1,18 @@
 package com.example.myapplication.home.model
 
-import com.example.myapplication.home.newsNetwork.NewsClinet
-import com.example.myapplication.home.newsNetwork.RemoteDataSource
+import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
+import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterface
+import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.NewsResponse
-import retrofit2.Response
 
 class NewsRepo(var rs:NewsClinet):NewsRepoInterface {
-    var remoteSource:RemoteDataSource = rs
+    var remoteSource:NewsRemoteDataInterface = rs
 
-    override fun getNewsFromApi(): Response<NewsResponse> {
-        return remoteSource.getNewsFromApi()
+     override fun getNewsFromApi():ApiState {
+         return try{
+             ApiState.Success(remoteSource.getNewsFromApi())
+         }catch (e:Exception){
+             ApiState.Failure(e)
+         }
     }
 }

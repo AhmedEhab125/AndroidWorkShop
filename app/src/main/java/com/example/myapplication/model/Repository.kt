@@ -1,9 +1,6 @@
 package com.example.myapplication.model
 
-import com.example.myapplication.login.loginView.LoginUser
 import com.example.myapplication.register.network.RemoteSourceInter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 class Repository(var remoteSourceInter: RemoteSourceInter) :RepositoryInterface {
 
