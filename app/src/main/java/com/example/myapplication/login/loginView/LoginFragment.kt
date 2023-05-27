@@ -9,14 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
+import com.example.myapplication.login.model.MockRepo
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Repository
-import com.example.myapplication.model.mockRepo
+import com.example.myapplication.model.RetriveData
+import com.example.myapplication.register.model.UserInfoDataSource
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        factory = LoginViewModelFactory(mockRepo())
+        factory = LoginViewModelFactory(MockRepo())
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
@@ -72,6 +72,7 @@ class LoginFragment : Fragment() {
                     Log.i("Emessage", "welcome ")
                     // progressDialog.hide()
                     Toast.makeText(requireContext(),"Welcome",Toast.LENGTH_LONG).show()
+                    UserInfoDataSource.getInstance().writeInShared(requireContext(),data.date as RetriveData)
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()

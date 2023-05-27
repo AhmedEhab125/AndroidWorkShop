@@ -13,6 +13,7 @@ import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.register.model.RegesterReposatry
 import com.example.myapplication.register.model.RegisterUser
+import com.example.myapplication.register.model.UserInfoDataSource
 import com.example.myapplication.register.registerViewModel.RegisterViewModel
 import com.example.myapplication.register.registerViewModel.RegisterViewModelFactory
 import com.example.myapplication.utility.RegisterValidation
@@ -111,6 +112,7 @@ class SignupFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).setAction("Action", null)
                     snakbar.show()
+                    UserInfoDataSource.getInstance().writeInShared(requireContext(),it.date as RetriveData)
                     binding.progressBar.visibility = View.GONE
                 }
 
