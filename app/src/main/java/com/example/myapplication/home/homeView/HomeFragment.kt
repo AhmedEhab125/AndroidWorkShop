@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
 import com.example.myapplication.home.homeViewModel.HomeViewModel
@@ -35,7 +36,7 @@ class HomeFragment : Fragment() {
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
         manager = LinearLayoutManager(context)
-        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet()))
+        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(),NewsDataBase.ArticlesDataBase.getInstance(requireContext())))
         homeViewModel = ViewModelProvider(this,homeFactory).get(HomeViewModel::class.java)
         return binding.root
     }
