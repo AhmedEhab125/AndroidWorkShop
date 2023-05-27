@@ -76,5 +76,10 @@ class HomeFragment : Fragment() {
 
     }
 
+    fun retry(){
+        //calling setting data ()
+        // Ahmead's Logic here 
+    }
+
 
 }
