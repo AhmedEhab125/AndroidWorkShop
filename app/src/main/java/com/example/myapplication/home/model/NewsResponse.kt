@@ -15,4 +15,3 @@ data class Articles(
      val id:Int?=null
 )
 
-data class NewsSource(var id: String, var name: String)

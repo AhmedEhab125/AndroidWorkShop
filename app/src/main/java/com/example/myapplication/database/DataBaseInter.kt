@@ -10,4 +10,5 @@ interface DataBaseInter {
     suspend fun getFavouriteArticles() : List<FavouriteArticles>
     suspend fun saveArticleRequest(articles: List<Articles>)
     suspend fun deleteUnfavouriteData()
+    suspend fun deleteArticel(favouriteArticles: FavouriteArticles)
 }

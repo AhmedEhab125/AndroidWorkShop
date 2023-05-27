@@ -24,6 +24,7 @@ import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentHomeBinding
 
 import com.example.myapplication.details.detailsView.DetailsFragment
+import com.example.myapplication.favorite.favoriteView.AddtoFavouite
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
 import com.example.myapplication.favorite.favoriteView.FavouriteFragment
 import com.example.myapplication.home.homeViewModel.HomeViewModel
@@ -41,7 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class HomeFragment : Fragment(),Comunicator {
+class HomeFragment : Fragment(),Comunicator,AddtoFavouite {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: FavRecyclerView
     private lateinit var manager:LayoutManager
@@ -222,6 +223,11 @@ class HomeFragment : Fragment(),Comunicator {
         json.put("urlToImage", articles.urlToImage)
         json.put("publishedAt", articles.publishedAt)
         return  json.toString()
+    }
+
+    override fun add(articles: Articles) {
+        println("sssssssssssssssssssssssssssssssssssss"+articles)
+       homeViewModel.addToFav(articles)
     }
 
 

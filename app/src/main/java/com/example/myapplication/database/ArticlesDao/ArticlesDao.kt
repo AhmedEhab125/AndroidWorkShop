@@ -1,9 +1,6 @@
 package com.example.myapplication.database.ArticlesDao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.myapplication.model.Articles
 import com.example.myapplication.register.model.FavouriteArticles
 import kotlinx.coroutines.flow.Flow
@@ -22,4 +19,6 @@ interface ArticlesDao {
 
     @Query("SELECT * FROM FavouriteArticles")
     fun getAllFavouriteArticles(): List<FavouriteArticles>
+    @Delete
+    suspend fun deleteArticle(articles: FavouriteArticles)
 }
