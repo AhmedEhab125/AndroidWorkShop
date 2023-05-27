@@ -15,6 +15,6 @@ interface ArticlesDao {
     @Query("SELECT * FROM Articles")
     fun getAllArticles(): List<Articles>
 
-    @Query("DELETE FROM Alerts WHERE isFavourite = :isFavourite")
-    fun deleteAlertByID(isFavourite: Boolean)
+    @Query("SELECT * FROM Articles WHERE isFavourite = true")
+    fun getFavouriteArticles(): List<Articles>
 }
