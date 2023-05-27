@@ -27,6 +27,6 @@ class FavouriteFragment : Fragment(){
         favAdapter = FavRecyclerView(listOf())
         binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
-        favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
+        fakeDataSourse().getSavedArticles()?.let { favAdapter.setArticlsList(it) }
     }
 }

@@ -6,5 +6,6 @@ import com.example.myapplication.model.Articles
 
 interface NewsRepoInterface {
     suspend fun getNewsFromApi(): ApiState
-    suspend fun getLocalData():List<Articles>
+    suspend fun getLocalData():List<Articles>?
+    suspend fun insertIntoDataBase(articles: List<Articles>)
 }

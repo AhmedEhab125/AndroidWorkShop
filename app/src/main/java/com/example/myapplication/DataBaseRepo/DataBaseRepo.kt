@@ -10,7 +10,7 @@ class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase) :DataSou
 
     }
 
-    override suspend fun saveArtivles(articles: Articles) {
+    override suspend fun saveArtivles(articles: List<Articles>) {
         articlesDataBase.articles().insertArticle(articles)
     }
 

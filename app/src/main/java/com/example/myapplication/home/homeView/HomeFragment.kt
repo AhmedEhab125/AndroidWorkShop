@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.myapplication.R
+import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
@@ -40,7 +41,8 @@ class HomeFragment : Fragment(),Comunicator {
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
         manager = LinearLayoutManager(context)
-        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet()))
+        adapter = FavRecyclerView(listOf(),this)
+        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(), fakeDataSourse(context)))
         homeViewModel = ViewModelProvider(this,homeFactory).get(HomeViewModel::class.java)
         return binding.root
     }
@@ -59,25 +61,23 @@ class HomeFragment : Fragment(),Comunicator {
             when(it){
                 is ApiState.Success<*> -> {
                     var list = it.date as List<Articles>
-                    print(list)
-                    adapter = FavRecyclerView(list,this)
+                    adapter.setArticlsList(list)
                     binding.homeRV.layoutManager = manager
                     binding.homeRV.adapter = adapter
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),it.err.message, Toast.LENGTH_LONG).show()
                      homeViewModel.getOfflineData()
-                     homeViewModel.localData.observe(viewLifecycleOwner){
-                         adapter = FavRecyclerView(it)
-                         binding.homeRV.layoutManager = manager
-                         binding.homeRV.adapter = adapter
-                     }
-                    //progressDialog.hide()
+
                 }
                 else -> {}
             }
         }
-
+        homeViewModel.localData.observe(viewLifecycleOwner){
+            adapter.setArticlsList(it)
+            binding.homeRV.layoutManager = manager
+            binding.homeRV.adapter = adapter
+        }
 
     }
     override fun navigateToHomeScreen(articles: Articles){
@@ -87,6 +87,7 @@ class HomeFragment : Fragment(),Comunicator {
         detailsFragment.arguments = args
         var transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,detailsFragment)
+            .addToBackStack(null)
             .commit()
     }
 

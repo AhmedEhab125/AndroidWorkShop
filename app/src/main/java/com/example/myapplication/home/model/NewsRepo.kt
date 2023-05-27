@@ -11,18 +11,25 @@ import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsResponse
 
-class NewsRepo(var rs:NewsClinet):NewsRepoInterface {
+class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoInterface {
     var remoteSource:NewsRemoteDataInterface = rs
-    var localSource: DataBaseInter = fakeDataSourse()
+    var localSource: DataBaseInter = articlesDataBase
      override suspend fun getNewsFromApi():ApiState {
          return try{
-             ApiState.Success(remoteSource.getNewsFromApi()?.articles)
+             val date = remoteSource.getNewsFromApi()?.articles
+             insertIntoDataBase(date!!)
+             ApiState.Success(date)
          }catch (e:Exception){
+             e.printStackTrace()
              ApiState.Failure(e)
          }
     }
 
-    override suspend fun getLocalData(): List<Articles> {
+    override suspend fun getLocalData(): List<Articles>? {
         return localSource.getSavedArticles()
+    }
+
+    override suspend fun insertIntoDataBase(articles: List<Articles>) {
+       localSource.saveArtivles(articles)
     }
 }

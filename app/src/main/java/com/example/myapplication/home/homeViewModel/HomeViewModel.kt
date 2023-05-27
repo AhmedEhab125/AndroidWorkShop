@@ -29,7 +29,7 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
             _localData.postValue(repo.getLocalData())
             isLoading.postValue(false)
         }
-
     }
+
 
 }
