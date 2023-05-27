@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if ( UserInfoDataSource.getInstance().readFromShared(applicationContext) != null){
+       if ( UserInfoDataSource.getInstance().readFromShared(applicationContext) != null){
             println("User Aleardy Login")
             navigateToHomeScreen()
         } else{
@@ -36,6 +36,12 @@ class MainActivity : AppCompatActivity() {
         var homeFragment  = HomeFragment()
         var transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,homeFragment)
+            .commit()
+    }
+    fun navigateToLoginScreen(){
+        var loginFragment  = LoginFragment()
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,loginFragment)
             .commit()
     }
 }

@@ -4,4 +4,5 @@ import com.example.myapplication.model.NewsResponse
 
 interface NewsRemoteDataInterface {
     suspend fun  getNewsFromApi(): NewsResponse?
+    suspend fun getFilteredArticles(filterOPerator :String) : NewsResponse
 }
