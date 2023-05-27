@@ -12,8 +12,9 @@ data class Articles(
     @PrimaryKey
     @Embedded
     val source: NewsSource, var author: String,
-    var title: String, var description: String, var url: String, val urlToImage: String,
-    var publishedAt: String, var content: String, var isFavourite: Boolean = false
+    var title: String, var discription: String, var url: String, val urlToImage: String,
+    var publishedAt: String, var content: String
 )
 
 data class NewsSource(var id: String, var name: String)
+

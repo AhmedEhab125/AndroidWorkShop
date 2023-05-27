@@ -33,7 +33,7 @@ class FavRecyclerView(var newsList: List<Articles>,var onClick : Comunicator? = 
    inner class ViewHolder(var binding: FavIteamBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setArticleData(articles: Articles) {
             binding.tvFavTitle.text = articles.title
-            binding.tvFavDiscribtion.text = articles.description
+            binding.tvFavDiscribtion.text = articles.discription
             binding.articleDate.text =articles.publishedAt
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
             binding.tvFavTitle.setOnClickListener {
