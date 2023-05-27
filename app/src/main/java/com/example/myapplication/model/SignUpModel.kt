@@ -30,4 +30,11 @@ sealed class ApiState {
 }
 
 
+data class LoginUserModel(
+    var email: String? = null,
+    var password: String? = null,
+    var returnSecureToken: Boolean? = null
+)
+
+
 

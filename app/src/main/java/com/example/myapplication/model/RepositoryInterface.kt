@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepositoryInterface {
      suspend fun registerUser(requestBody: SignUpModel) : ApiState
-    suspend fun getUserNameAndPassword(userName:String,password:String): ApiState
+    suspend fun loginUser(loginUserBody:LoginUserModel): ApiState
 
 }
