@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.database.fakeDataSourse
@@ -14,6 +15,7 @@ import com.example.myapplication.databinding.FragmentFavouriteBinding
 import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.home.homeView.Comunicator
 import com.example.myapplication.model.Articles
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class FavouriteFragment : Fragment() , Comunicator {
@@ -33,7 +35,10 @@ class FavouriteFragment : Fragment() , Comunicator {
         favAdapter = FavRecyclerView(listOf(),this)
         binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
-        favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
+        lifecycleScope.launch {
+            favAdapter.setArticlsList(fakeDataSourse(requireContext()).getSavedArticles())
+
+        }
 
     }
 

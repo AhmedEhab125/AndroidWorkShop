@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
-import com.example.myapplication.database.NewsDataBase
+import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentHomeBinding
 
 import com.example.myapplication.details.detailsView.DetailsFragment
@@ -58,7 +58,8 @@ class HomeFragment : Fragment(),Comunicator {
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
         manager = LinearLayoutManager(context)
-        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(),NewsDataBase.ArticlesDataBase.getInstance(requireContext())))
+        adapter = FavRecyclerView(listOf(),this)
+        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(), fakeDataSourse(binding.root.context)))
         homeViewModel = ViewModelProvider(this,homeFactory).get(HomeViewModel::class.java)
         return binding.root
     }
@@ -96,7 +97,7 @@ class HomeFragment : Fragment(),Comunicator {
             }
         }
         homeViewModel.localData.observe(viewLifecycleOwner){
-                         adapter = FavRecyclerView(it)
+                         adapter.setArticlsList(it)
                          binding.homeRV.layoutManager = manager
                          binding.homeRV.adapter = adapter
                      }
@@ -104,8 +105,7 @@ class HomeFragment : Fragment(),Comunicator {
             when (it) {
                 is ApiState.Success<*> -> {
                     var list = it.date as List<Articles>
-                    print(list)
-                    adapter = FavRecyclerView(list,this)
+                    adapter.setArticlsList(list)
                     binding.homeRV.layoutManager = manager
                     binding.homeRV.adapter = adapter
                 }
@@ -113,8 +113,7 @@ class HomeFragment : Fragment(),Comunicator {
                     lastRequest = false
                     Toast.makeText(requireContext(),it.err.message, Toast.LENGTH_LONG).show()
                      homeViewModel.getOfflineData()
-                     
-                    //progressDialog.hide()
+
                 }
                 else -> {}
             }
@@ -122,8 +121,7 @@ class HomeFragment : Fragment(),Comunicator {
                 when (it) {
                     is ApiState.Success<*> -> {
                         var list = it.date as List<Articles>
-                        print(list)
-                        adapter = FavRecyclerView(list)
+                        adapter.setArticlsList(list)
                         binding.homeRV.layoutManager = manager
                         binding.homeRV.adapter = adapter
                     }
@@ -183,6 +181,7 @@ class HomeFragment : Fragment(),Comunicator {
         detailsFragment.arguments = args
         var transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,detailsFragment)
+            .addToBackStack(null)
             .commit()
     }
 
@@ -225,6 +224,5 @@ class HomeFragment : Fragment(),Comunicator {
         return  json.toString()
     }
 
- 
 
 }
