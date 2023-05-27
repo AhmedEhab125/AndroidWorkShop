@@ -2,7 +2,14 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.DataBaseRepo.DataBaseRepo
+import com.example.myapplication.database.NewsDataBase
+import com.example.myapplication.model.Articles
+import com.example.myapplication.model.NewsSource
 import com.example.myapplication.register.model.UserInfoDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
