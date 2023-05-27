@@ -33,6 +33,7 @@ class FavRecyclerView(var newsList: List<Articles>) :
         fun setArticleData(articles: Articles) {
             binding.tvFavTitle.text = articles.title
             binding.tvFavDiscribtion.text = articles.discription
+            binding.articleDate.text =articles.publishedAt
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
         }
     }
