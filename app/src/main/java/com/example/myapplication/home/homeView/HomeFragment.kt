@@ -61,7 +61,12 @@ class HomeFragment : Fragment() {
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),it.err.message, Toast.LENGTH_LONG).show()
-                    Log.i("Emessage", "error")
+                     homeViewModel.getOfflineData()
+                     homeViewModel.localData.observe(viewLifecycleOwner){
+                         adapter = FavRecyclerView(it)
+                         binding.homeRV.layoutManager = manager
+                         binding.homeRV.adapter = adapter
+                     }
                     //progressDialog.hide()
                 }
                 else -> {}
