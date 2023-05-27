@@ -67,6 +67,10 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
 
     }
 
+    override suspend fun deleteArticel(favouriteArticles: FavouriteArticles) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun saveArtivles(articles: List<Articles>) {
         localSource.saveArtivles(articles)
     }

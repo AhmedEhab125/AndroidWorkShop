@@ -9,7 +9,6 @@ import com.example.myapplication.favorite.favoriteView.FavouriteFragment
 import com.example.myapplication.home.homeView.HomeFragment
 import com.example.myapplication.login.loginView.LoginFragment
 import com.example.myapplication.model.Articles
-import com.example.myapplication.model.NewsSource
 import com.example.myapplication.register.model.FavouriteArticles
 import com.example.myapplication.register.model.UserInfoDataSource
 import kotlinx.coroutines.Dispatchers

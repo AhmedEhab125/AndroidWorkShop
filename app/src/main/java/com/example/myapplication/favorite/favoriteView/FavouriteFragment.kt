@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.database.NewsDataBase
@@ -21,12 +22,9 @@ import com.example.myapplication.home.model.NewsRepo
 import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
 import com.example.myapplication.model.Articles
 import com.example.myapplication.register.model.FavouriteArticles
-import org.json.JSONObject
-import com.example.myapplication.details.detailsView.DetailsFragment
-import com.example.myapplication.home.homeView.Comunicator
-import com.example.myapplication.model.Articles
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+
 
 class FavouriteFragment : Fragment(),AddtoFavouite, Comunicator {
     lateinit var binding: FragmentFavouriteBinding
@@ -42,8 +40,8 @@ class FavouriteFragment : Fragment(),AddtoFavouite, Comunicator {
         favFactory = FavViewModelFactory(
             NewsRepo(
                 NewsClinet(),
-                NewsDataBase.ArticlesDataBase.getInstance(requireContext()))
-        )
+                fakeDataSourse(requireContext())
+        ))
         favViewModel = ViewModelProvider(this,favFactory).get(FavoriteViewModel::class.java)
         return binding.root
     }
@@ -53,11 +51,14 @@ class FavouriteFragment : Fragment(),AddtoFavouite, Comunicator {
         favAdapter = FavRecyclerView(listOf(),this)
         binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
-        favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
+        lifecycleScope.launch {
+            favAdapter.setArticlsList(fakeDataSourse(requireContext()).getFavouriteArticles().map { Articles(it.author,it.title,it.discription,it.url,
+                it.urlToImage,it.publishedAt,it.content,isFavourite = true) })
+        }
         favViewModel.favData.observe(viewLifecycleOwner){list->
             var articlesList = mutableListOf<Articles>()
             list.forEach {
-                articlesList.add(Articles(it.source,it.author,it.title,it.discription,it.url,it.urlToImage,it.publishedAt,it.content))
+                articlesList.add(Articles(it.author,it.title,it.discription,it.url,it.urlToImage,it.publishedAt,it.content))
             }
             binding.rvFavNews.adapter =  favAdapter
             favAdapter.setArticlsList(articlesList)
@@ -65,8 +66,8 @@ class FavouriteFragment : Fragment(),AddtoFavouite, Comunicator {
     }
     override fun add(articles: Articles) {
         favViewModel.removeFavData(
-            FavouriteArticles(articles.source,articles.author,articles.title
-                ,articles.discription,articles.url,articles.urlToImage,articles.publishedAt,articles.content)
+            FavouriteArticles(articles.author,articles.title
+                ,articles.description,articles.url,articles.urlToImage,articles.publishedAt,articles.content)
         )
     }
     override fun navigateToDetalisScreen(articles: Articles) {

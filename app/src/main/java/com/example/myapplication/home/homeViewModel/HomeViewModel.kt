@@ -48,12 +48,11 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
         }
     }
     fun addToFav(articles: Articles){
-        if (articles.source.id!=null && articles.source.name!=null){
-        var temp =FavouriteArticles(articles.source,articles.author,articles.title
-            ,articles.discription,articles.url,"ddd",articles.publishedAt,articles.content)
+        var temp =FavouriteArticles(articles.author,articles.title
+            ,articles.description,articles.url,"ddd",articles.publishedAt,articles.content)
         viewModelScope.launch(Dispatchers.IO) {
         repo.saveFavArtivles(temp)
-        }
+
         }
     }
 
