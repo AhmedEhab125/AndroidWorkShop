@@ -21,27 +21,7 @@ data class RetriveData(
     var localId: String? = null
 )
 
-data class ErrorRetrivedData(
 
-    var error: Error? = Error()
-
-)
-
-data class Errors(
-
-    var message: String? = null,
-    var domain: String? = null,
-    var reason: String? = null
-
-)
-
-data class Error(
-
-    var code: Int? = null,
-    var message: String? = null,
-    var errors: ArrayList<Errors> = arrayListOf()
-
-)
 
 sealed class ApiState {
     class Success<T>(val date: T) : ApiState()
