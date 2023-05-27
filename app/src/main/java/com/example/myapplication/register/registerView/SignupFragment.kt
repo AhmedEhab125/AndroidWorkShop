@@ -1,5 +1,7 @@
 package com.example.myapplication.register.registerView
 
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSignupBinding
+import com.example.myapplication.home.homeView.HomeFragment
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
@@ -31,6 +35,7 @@ class SignupFragment : Fragment() {
    var validation = RegisterValidation()
   lateinit var registerModel : RegisterViewModel
   lateinit var registerFactory : RegisterViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -119,6 +124,7 @@ class SignupFragment : Fragment() {
                     snakbar.show()
                     UserInfoDataSource.getInstance().writeInShared(requireContext(),it.date as RetriveData)
                     binding.progressBar.visibility = View.GONE
+                   navigateToHomeScreen()
                 }
 
                 is ApiState.Failure -> {
@@ -136,5 +142,11 @@ class SignupFragment : Fragment() {
 
         }
     }
+    fun navigateToHomeScreen(){
+        (activity as MainActivity).navigateToHomeScreen()
+    }
+
+
+
 
 }
