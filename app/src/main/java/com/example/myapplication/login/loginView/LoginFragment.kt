@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
+import com.example.myapplication.home.homeView.HomeFragment
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
 import com.example.myapplication.home.model.NewsRepo
@@ -30,6 +32,7 @@ class LoginFragment : Fragment() {
     private lateinit var progressDialog: ProgressDialog
     private  lateinit var factory:LoginViewModelFactory
     private  lateinit var viewModel:LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,9 +44,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     binding.signupBtn.setOnClickListener {
-        var signupFragment : SignupFragment = SignupFragment()
+        var signupFragment  = SignupFragment()
         var transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainerView,signupFragment)
+        transaction.replace(R.id.container,signupFragment)
+            transaction.addToBackStack(null)
             .commit()
     }
 
@@ -90,6 +94,7 @@ class LoginFragment : Fragment() {
                     // progressDialog.hide()
                     Toast.makeText(requireContext(),"Welcome",Toast.LENGTH_LONG).show()
                     UserInfoDataSource.getInstance().writeInShared(requireContext(),data.date as RetriveData)
+                   navigateToHomeScreen()
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()
@@ -99,5 +104,8 @@ class LoginFragment : Fragment() {
                 else -> {}
             }
         }
+    }
+    fun navigateToHomeScreen(){
+        (activity as MainActivity).navigateToHomeScreen()
     }
 }
