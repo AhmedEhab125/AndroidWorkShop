@@ -18,13 +18,10 @@ import com.example.myapplication.home.model.NewsRepo
 import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
 import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
+import com.example.myapplication.model.*
 
-import com.example.myapplication.model.ApiState
-import com.example.myapplication.model.NewsResponse
-import com.example.myapplication.model.MockRepo
-import com.example.myapplication.model.Repository
-import com.example.myapplication.model.RetriveData
 import com.example.myapplication.register.model.UserInfoDataSource
+import com.example.myapplication.register.network.RemoteSource
 import com.example.myapplication.register.registerView.SignupFragment
 import kotlinx.coroutines.launch
 
@@ -53,7 +50,7 @@ class LoginFragment : Fragment() {
 
 
         super.onViewCreated(view, savedInstanceState)
-        factory = LoginViewModelFactory(MockRepo())
+        factory = LoginViewModelFactory(Repository(RemoteSource()))
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
@@ -73,7 +70,8 @@ class LoginFragment : Fragment() {
             }
             if(!email.isNullOrEmpty() && ! password.isNullOrEmpty()){
                 Log.i("Emessage", email+" "+password)
-                viewModel.getUserNameAndPassword(email,password)
+               var loginUserBode = LoginUserModel(email,password,true)
+                viewModel.getUserNameAndPassword(loginUserBode)
             }
             observeAtLiveData()
         }
@@ -95,7 +93,7 @@ class LoginFragment : Fragment() {
                 }
                 is ApiState.Failure -> {
                     Toast.makeText(requireContext(),data.err.message,Toast.LENGTH_LONG).show()
-                    Log.i("Emessage", "error")
+                    Log.i("Emessage", data.err.localizedMessage)
                     //progressDialog.hide()
                 }
                 else -> {}
