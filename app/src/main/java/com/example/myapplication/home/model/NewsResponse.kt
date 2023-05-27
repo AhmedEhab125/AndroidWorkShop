@@ -13,7 +13,8 @@ data class Articles(
     @Embedded
     val source: NewsSource, var author: String,
     var title: String, var discription: String, var url: String, val urlToImage: String,
-    var publishedAt: String, var content: String, var isFavourite: Boolean = false
+    var publishedAt: String, var content: String
 )
 
 data class NewsSource(var id: String, var name: String)
+

@@ -9,7 +9,7 @@ import com.example.myapplication.database.ArticlesDao.ArticlesDao
 import com.example.myapplication.model.Articles
 
 class NewsDataBase {
-    @Database(entities = arrayOf(Articles::class), version = 2)
+    @Database(entities = arrayOf(Articles::class), version = 3)
 
     abstract class ArticlesDataBase : RoomDatabase() {
         abstract fun articles (): ArticlesDao
