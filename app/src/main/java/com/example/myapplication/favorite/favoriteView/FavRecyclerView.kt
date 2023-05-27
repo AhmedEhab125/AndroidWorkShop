@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.FavIteamBinding
+import com.example.myapplication.home.homeView.Comunicator
 import com.example.myapplication.model.Articles
 
-class FavRecyclerView(var newsList: List<Articles>) :
+class FavRecyclerView(var newsList: List<Articles>,var onClick : Comunicator? = null) :
     RecyclerView.Adapter<FavRecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,12 +30,15 @@ class FavRecyclerView(var newsList: List<Articles>) :
         notifyDataSetChanged()
     }
 
-    class ViewHolder(var binding: FavIteamBinding) : RecyclerView.ViewHolder(binding.root) {
+   inner class ViewHolder(var binding: FavIteamBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setArticleData(articles: Articles) {
             binding.tvFavTitle.text = articles.title
             binding.tvFavDiscribtion.text = articles.discription
             binding.articleDate.text =articles.publishedAt
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
+            binding.tvFavTitle.setOnClickListener {
+                onClick?.navigateToHomeScreen(articles)
+            }
         }
     }
 }
