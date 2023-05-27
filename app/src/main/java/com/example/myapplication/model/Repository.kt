@@ -4,6 +4,7 @@ import com.example.myapplication.register.network.RemoteSourceInter
 
 class Repository(var remoteSourceInter: RemoteSourceInter) :RepositoryInterface {
 
+
     override suspend fun registerUser(requestBody: SignUpModel): RetriveData {
        return remoteSourceInter.registerUser(requestBody)
     }
