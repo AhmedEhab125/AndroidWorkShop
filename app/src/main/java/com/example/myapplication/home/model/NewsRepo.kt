@@ -34,28 +34,24 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
        localSource.saveArtivles(articles)
     }
 
-    override suspend fun getAllSavedArticles(): List<Articles> {
+    override suspend fun getAllSavedArticles(): List<Articles>? {
         return localSource.getSavedArticles()
 
     }
 
     override suspend fun saveFavArtivles(articles: FavouriteArticles) {
-        localSource.insertFavArticle(articles)
+        localSource.saveFavArtivles(articles)
     }
 
-    override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles>? {
 
-        return localSource.articles().getAllFavouriteArticles()
+        return localSource.getFavouriteArticles()
     }
 
     override suspend fun saveArticleRequest(articles: List<Articles>) {
-        articles.forEach { article ->
-            localSource.articles().insertArticle(article)
-        }
+            localSource.saveArtivles(articles)
     }
-
     override suspend fun deleteUnfavouriteData() {
-
-        localSource.deleteAllUnFavouriteArticles()
+        localSource.deleteUnfavouriteData()
     }
 }

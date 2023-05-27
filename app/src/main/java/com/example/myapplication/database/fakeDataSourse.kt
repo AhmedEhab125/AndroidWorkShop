@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.myapplication.database.ArticlesDao.ArticlesDao
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsSource
+import com.example.myapplication.register.model.FavouriteArticles
 
 class fakeDataSourse(var context: Context? = null) : DataBaseInter {
     companion object{
@@ -26,8 +27,20 @@ class fakeDataSourse(var context: Context? = null) : DataBaseInter {
         myArticleDoa?.insertArticle(articles)
     }
 
-    override fun getFavouriteArticles(): List<Articles> {
-        return listOf()
+    override suspend fun saveFavArtivles(articles: FavouriteArticles) {
+        myArticleDoa?.insertFavArticle(articles)
+    }
+
+    override suspend fun saveArticleRequest(articles: List<Articles>) {
+        myArticleDoa?.insertArticle(articles)
+    }
+
+    override suspend fun deleteUnfavouriteData() {
+        myArticleDoa?.deleteAllUnFavouriteArticles()
+    }
+
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles>? {
+        return myArticleDoa?.getAllFavouriteArticles()
     }
 
 

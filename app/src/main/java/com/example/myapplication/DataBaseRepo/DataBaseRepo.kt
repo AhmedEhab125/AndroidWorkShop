@@ -18,15 +18,14 @@ class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase) :DataSou
 
         return articlesDataBase.articles().getAllFavouriteArticles()
     }
+
     override suspend fun saveArtivles(articles: List<Articles>) {
         articlesDataBase.articles().insertArticle(articles)
     }
 
 
     override suspend fun saveArticleRequest(articles: List<Articles>) {
-        articles.forEach { article ->
-            articlesDataBase.articles().insertArticle(article)
-        }
+        articlesDataBase.articles().insertArticle(articles)
     }
 
     override suspend fun deleteUnfavouriteData() {
@@ -34,4 +33,5 @@ class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase) :DataSou
         articlesDataBase.articles().deleteAllUnFavouriteArticles()
 
 
+    }
 }

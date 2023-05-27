@@ -5,7 +5,7 @@ import com.example.myapplication.register.model.FavouriteArticles
 
 interface DataSourceInter {
    suspend fun getAllSavedArticles() : List<Articles>
-   suspend fun saveArtivles(articles: Articles)
+   suspend fun saveArtivles(articles: List<Articles>)
 
    suspend fun saveFavArtivles(articles: FavouriteArticles)
    suspend fun getFavouriteArticles() : List<FavouriteArticles>
