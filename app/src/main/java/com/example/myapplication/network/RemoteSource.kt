@@ -1,6 +1,7 @@
 package com.example.myapplication.network
 
 import android.util.Log
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.model.SignUpModel
 
@@ -13,7 +14,7 @@ class RemoteSource  {
 
      suspend fun registerUser(requestBody: SignUpModel) : RetriveData {
 
-    return   RetrofitClass.getInstance().registerUser(requestBody =requestBody )
+    return   RetrofitClass.getInstance().registerUser(requestBody =requestBody ,  BuildConfig.APP_KEY_1)
 
     }
 }
