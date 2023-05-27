@@ -10,7 +10,7 @@ class NewsRepo(var rs:NewsClinet):NewsRepoInterface {
 
      override suspend fun getNewsFromApi():ApiState {
          return try{
-             ApiState.Success(remoteSource.getNewsFromApi())
+             ApiState.Success(remoteSource.getNewsFromApi()?.articles)
          }catch (e:Exception){
              ApiState.Failure(e)
          }
