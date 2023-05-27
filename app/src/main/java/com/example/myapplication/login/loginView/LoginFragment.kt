@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
+import com.example.myapplication.login.model.MockRepo
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
-import com.example.myapplication.model.mockRepo
 import com.example.myapplication.register.model.UserInfoDataSource
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        factory = LoginViewModelFactory(mockRepo())
+        factory = LoginViewModelFactory(MockRepo())
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
         progressDialog = ProgressDialog(context)
         progressDialog.setMessage("loading")
