@@ -98,8 +98,12 @@ class HomeFragment : Fragment(),Comunicator {
         json.put("content", articles.content)
         json.put("urlToImage", articles.urlToImage)
         json.put("publishedAt", articles.publishedAt)
-
         return  json.toString()
+    }
+
+    fun retry(){
+        //calling setting data ()
+        // Ahmead's Logic here 
     }
 
 }

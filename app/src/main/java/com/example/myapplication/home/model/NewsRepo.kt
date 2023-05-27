@@ -10,6 +10,7 @@ import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterfa
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsResponse
+import com.example.myapplication.register.model.FavouriteArticles
 
 class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoInterface {
     var remoteSource:NewsRemoteDataInterface = rs
@@ -31,5 +32,30 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
 
     override suspend fun insertIntoDataBase(articles: List<Articles>) {
        localSource.saveArtivles(articles)
+    }
+
+    override suspend fun getAllSavedArticles(): List<Articles> {
+        return localSource.getSavedArticles()
+
+    }
+
+    override suspend fun saveFavArtivles(articles: FavouriteArticles) {
+        localSource.insertFavArticle(articles)
+    }
+
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
+
+        return localSource.articles().getAllFavouriteArticles()
+    }
+
+    override suspend fun saveArticleRequest(articles: List<Articles>) {
+        articles.forEach { article ->
+            localSource.articles().insertArticle(article)
+        }
+    }
+
+    override suspend fun deleteUnfavouriteData() {
+
+        localSource.deleteAllUnFavouriteArticles()
     }
 }
