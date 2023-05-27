@@ -9,6 +9,7 @@ import com.example.myapplication.home.homeView.HomeFragment
 import com.example.myapplication.login.loginView.LoginFragment
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsSource
+import com.example.myapplication.register.model.FavouriteArticles
 import com.example.myapplication.register.model.UserInfoDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,10 +30,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-
-
     }
-
 
     fun navigateToHomeScreen(){
         var homeFragment  = HomeFragment()
