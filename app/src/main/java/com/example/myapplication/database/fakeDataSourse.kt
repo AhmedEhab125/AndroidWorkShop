@@ -5,8 +5,9 @@ import com.example.myapplication.database.ArticlesDao.ArticlesDao
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsSource
 import com.example.myapplication.register.model.FavouriteArticles
+import kotlinx.coroutines.Dispatchers
 
-class fakeDataSourse(var context: Context? = null) : DataBaseInter {
+class fakeDataSourse(context: Context) : DataBaseInter {
     companion object{
         private var myInstance:fakeDataSourse? = null
         fun getInstance(ctx: Context):fakeDataSourse?{
@@ -16,11 +17,11 @@ class fakeDataSourse(var context: Context? = null) : DataBaseInter {
         }
     }
 
-    val myArticleDoa: ArticlesDao? by lazy {
-        context?.let { NewsDataBase.ArticlesDataBase.getInstance(it).articles() }
+    val myArticleDoa: ArticlesDao by lazy {
+        context.let { NewsDataBase.ArticlesDataBase.getInstance(it).articles() }
     }
-    override fun getSavedArticles(): List<Articles>? {
-        return myArticleDoa?.getAllArticles()
+    override suspend fun getSavedArticles(): List<Articles> {
+        return with(Dispatchers.IO){ myArticleDoa.getAllArticles()}
     }
 
     override suspend fun saveArtivles(articles: List<Articles>) {
@@ -36,11 +37,11 @@ class fakeDataSourse(var context: Context? = null) : DataBaseInter {
     }
 
     override suspend fun deleteUnfavouriteData() {
-        myArticleDoa?.deleteAllUnFavouriteArticles()
+        myArticleDoa.deleteAllUnFavouriteArticles()
     }
 
-    override suspend fun getFavouriteArticles(): List<FavouriteArticles>? {
-        return myArticleDoa?.getAllFavouriteArticles()
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
+        return myArticleDoa.getAllFavouriteArticles()
     }
 
 

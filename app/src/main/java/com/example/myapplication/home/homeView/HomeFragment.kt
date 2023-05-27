@@ -59,7 +59,7 @@ class HomeFragment : Fragment(),Comunicator {
         progressDialog.setMessage("loading")
         manager = LinearLayoutManager(context)
         adapter = FavRecyclerView(listOf(),this)
-        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(), fakeDataSourse(context)))
+        homeFactory = HomeViewModelFactory(NewsRepo(NewsClinet(), fakeDataSourse(binding.root.context)))
         homeViewModel = ViewModelProvider(this,homeFactory).get(HomeViewModel::class.java)
         return binding.root
     }

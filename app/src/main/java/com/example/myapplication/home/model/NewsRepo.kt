@@ -35,7 +35,7 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
        localSource.saveArtivles(articles)
     }
 
-    override suspend fun getAllSavedArticles(): List<Articles>? {
+    override suspend fun getAllSavedArticles(): List<Articles> {
         return localSource.getSavedArticles()
 
     }
@@ -44,7 +44,7 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
         localSource.saveFavArtivles(articles)
     }
 
-    override suspend fun getFavouriteArticles(): List<FavouriteArticles>? {
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
 
         return localSource.getFavouriteArticles()
     }
@@ -65,5 +65,9 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
            ApiState.Failure(e)
        }
 
+    }
+
+    override suspend fun saveArtivles(articles: List<Articles>) {
+        localSource.saveArtivles(articles)
     }
 }
