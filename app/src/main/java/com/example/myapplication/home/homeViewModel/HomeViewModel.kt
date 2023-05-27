@@ -8,6 +8,7 @@ import com.example.myapplication.home.model.NewsRepoInterface
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.RepositoryInterface
+import com.example.myapplication.register.model.FavouriteArticles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -45,6 +46,15 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
     fun clearCashedData(){
         viewModelScope.launch(Dispatchers.IO) {
         repo.deleteUnfavouriteData()
+        }
+    }
+    fun addToFav(articles: Articles){
+        if (articles.source.id!=null && articles.source.name!=null){
+        var temp =FavouriteArticles(articles.source,articles.author,articles.title
+            ,articles.discription,articles.url,"ddd",articles.publishedAt,articles.content)
+        viewModelScope.launch(Dispatchers.IO) {
+        repo.saveFavArtivles(temp)
+        }
         }
     }
 

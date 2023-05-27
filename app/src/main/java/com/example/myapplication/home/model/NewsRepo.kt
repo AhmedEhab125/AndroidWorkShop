@@ -29,6 +29,10 @@ class NewsRepo(var rs: NewsClinet, var articlesDataBase: NewsDataBase.ArticlesDa
         return localSource.getSavedArticles()
     }
 
+    override suspend fun deleteArticel(favouriteArticles: FavouriteArticles) {
+        articlesDataBase.articles().deleteArticle(favouriteArticles)
+    }
+
     override suspend fun getAllSavedArticles(): List<Articles> {
         return articlesDataBase.articles().getAllArticles()
 

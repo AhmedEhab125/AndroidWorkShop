@@ -10,12 +10,12 @@ class FavouriteArticles(
     @PrimaryKey
     @Embedded
     var source: NewsSource,
-    var author: String,
-    var title: String,
-    var discription: String,
-    var url: String,
-    var urlToImage: String,
-    var publishedAt: String,
-    var content: String,
-    var isFavourite: Boolean = false
+    var author: String?,
+    var title: String ?,
+    var discription: String ?,
+    var url: String?,
+    var urlToImage: String?,
+    var publishedAt: String?,
+    var content: String?
+
 )

@@ -23,6 +23,7 @@ import com.example.myapplication.R
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.details.detailsView.DetailsFragment
+import com.example.myapplication.favorite.favoriteView.AddtoFavouite
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
@@ -39,7 +40,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class HomeFragment : Fragment(),Comunicator {
+class HomeFragment : Fragment(),Comunicator,AddtoFavouite {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: FavRecyclerView
     private lateinit var manager:LayoutManager
@@ -89,7 +90,7 @@ class HomeFragment : Fragment(),Comunicator {
             }
         }
         homeViewModel.localData.observe(viewLifecycleOwner){
-                         adapter = FavRecyclerView(it)
+                         adapter = FavRecyclerView(it,this)
                          binding.homeRV.layoutManager = manager
                          binding.homeRV.adapter = adapter
                      }
@@ -116,7 +117,7 @@ class HomeFragment : Fragment(),Comunicator {
                     is ApiState.Success<*> -> {
                         var list = it.date as List<Articles>
                         print(list)
-                        adapter = FavRecyclerView(list)
+                        adapter = FavRecyclerView(list,this)
                         binding.homeRV.layoutManager = manager
                         binding.homeRV.adapter = adapter
                     }
@@ -209,6 +210,10 @@ class HomeFragment : Fragment(),Comunicator {
         return  json.toString()
     }
 
- 
+    override fun add(articles: Articles) {
+        println("sssssssssssssssssssssssssssssssssssss"+articles)
+       homeViewModel.addToFav(articles)
+    }
+
 
 }

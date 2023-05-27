@@ -8,7 +8,7 @@ import com.example.myapplication.databinding.FavIteamBinding
 import com.example.myapplication.home.homeView.Comunicator
 import com.example.myapplication.model.Articles
 
-class FavRecyclerView(var newsList: List<Articles>,var onClick : Comunicator? = null) :
+class FavRecyclerView(var newsList: List<Articles>,var addtoFavouite: AddtoFavouite,var onClick : Comunicator? = null) :
     RecyclerView.Adapter<FavRecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +38,12 @@ class FavRecyclerView(var newsList: List<Articles>,var onClick : Comunicator? = 
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
             binding.tvFavTitle.setOnClickListener {
                 onClick?.navigateToHomeScreen(articles)
+            }
+            binding.btnAddFav.text="remove from favourite"
+            binding.btnAddFav.setOnClickListener {
+
+                addtoFavouite.add(articles)
+
             }
         }
     }

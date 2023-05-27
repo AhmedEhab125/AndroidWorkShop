@@ -11,10 +11,10 @@ data class NewsResponse(var status: String, var totalResults: Int, var articles:
 data class Articles(
     @PrimaryKey
     @Embedded
-    val source: NewsSource, var author: String,
-    var title: String, var discription: String, var url: String, val urlToImage: String,
-    var publishedAt: String, var content: String
+    val source: NewsSource, var author: String?,
+    var title: String?, var discription: String?, var url: String?, val urlToImage: String?,
+    var publishedAt: String?, var content: String?
 )
 
-data class NewsSource(var id: String, var name: String)
+data class NewsSource(var id: String , var name: String)
 
