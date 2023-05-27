@@ -12,8 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.login.loginViewModel.LoginViewModel
 import com.example.myapplication.login.loginViewModel.LoginViewModelFactory
-import com.example.myapplication.login.model.MockRepo
+
 import com.example.myapplication.model.ApiState
+import com.example.myapplication.model.MockRepo
 import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.register.model.UserInfoDataSource
