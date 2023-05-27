@@ -8,4 +8,8 @@ class NewsClinet: NewsRemoteDataInterface {
     override suspend fun getNewsFromApi(): NewsResponse? {
         return RetrofitClass.myApiService.api_service.getNewsFromApi()
     }
+
+    override suspend fun getFilteredArticles(filterOPerator: String): NewsResponse {
+       return RetrofitClass.myApiService.api_service.getFilteredArticels(filterOPerator)
+    }
 }

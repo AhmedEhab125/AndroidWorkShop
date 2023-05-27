@@ -42,4 +42,11 @@ class UserInfoDataSource() {
         createUserInvoShared(context)
         return Gson().fromJson(sharedPreferences.getString("userData", ""), RetriveData::class.java)
     }
+    fun deleteCash(context: Context,retriveData: RetriveData){
+        sharedPreferences =context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+        sharedPreferences.edit().apply {
+            putString("userData", null)
+            apply()
+        }
+    }
 }
