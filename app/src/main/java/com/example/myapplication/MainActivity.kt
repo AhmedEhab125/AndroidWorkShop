@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.DataBaseRepo.DataBaseRepo
-import com.example.myapplication.database.FavouriteArticlesDAtaBase
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsSource
@@ -34,8 +33,7 @@ class MainActivity : AppCompatActivity() {
             title, discription, "", img, date, ""
         )
 
-        var db =DataBaseRepo(NewsDataBase.ArticlesDataBase.getInstance(this),
-            FavouriteArticlesDAtaBase.FavArticlesDataBase.getInstance(this))
+        var db =DataBaseRepo(NewsDataBase.ArticlesDataBase.getInstance(this))
         lifecycleScope.launch (Dispatchers.IO){
             println("ggggggggggggggggggggggggggggggggggggggggggggg"+db.getAllSavedArticles())
             db.saveArticleRequest(listOf(data) )
