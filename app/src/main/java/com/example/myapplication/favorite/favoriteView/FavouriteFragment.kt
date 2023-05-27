@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.myapplication.R
+import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentFavouriteBinding
 
 class FavouriteFragment : Fragment() {
     lateinit var binding: FragmentFavouriteBinding
-
+    lateinit var favAdapter :FavRecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,8 +25,10 @@ class FavouriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvFavNews.adapter = FavRecyclerView(listOf())
+        favAdapter = FavRecyclerView(listOf())
+        binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
+        favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
     }
 
 }

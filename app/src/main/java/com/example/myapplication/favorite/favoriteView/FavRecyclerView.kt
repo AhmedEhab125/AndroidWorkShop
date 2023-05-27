@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.FavIteamBinding
 import com.example.myapplication.model.Articles
-import com.example.myapplication.model.NewsModel
 
 class FavRecyclerView(var newsList: List<Articles>) :
     RecyclerView.Adapter<FavRecyclerView.ViewHolder>() {
@@ -33,7 +32,7 @@ class FavRecyclerView(var newsList: List<Articles>) :
     class ViewHolder(var binding: FavIteamBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setArticleData(articles: Articles) {
             binding.tvFavTitle.text = articles.title
-            binding.tvFavDiscribtion.text = articles.description
+            binding.tvFavDiscribtion.text = articles.discription
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
         }
     }
