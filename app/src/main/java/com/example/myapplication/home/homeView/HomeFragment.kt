@@ -1,8 +1,12 @@
 package com.example.myapplication.home.homeView
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +15,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.myapplication.MainActivity
+import com.example.myapplication.R
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.databinding.FragmentHomeBinding
+import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
@@ -25,14 +32,22 @@ import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.register.model.UserInfoDataSource
+import com.example.myapplication.network.NetworkConectivityObserver
+import com.example.myapplication.network.NetworkObservation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),Comunicator {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: FavRecyclerView
     private lateinit var manager:LayoutManager
     private lateinit var homeFactory:HomeViewModelFactory
     private lateinit var homeViewModel:HomeViewModel
     private lateinit var progressDialog: ProgressDialog
+    lateinit var networkObservation : NetworkObservation
+    var lastRequest = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +63,24 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        networkObservation = NetworkConectivityObserver(requireContext())
+         lifecycleScope.launch {
+             networkObservation.observeOnNetwork().collectLatest {
+                 when(it.name){
+                      "Avaliavle" -> {
+                          if (!lastRequest){
+                              showInternetDialog()
+                          }
+                       Log.i("Internet",it.name)
 
+                     }
+                     "Lost" -> {
+                         Log.i("Internet",it.name)
+
+                     }
+                 }
+         }
+         }
         homeViewModel.getNewsData()
         homeViewModel.isLoading.observe(viewLifecycleOwner){
             when(it){
@@ -56,23 +88,25 @@ class HomeFragment : Fragment() {
                 else -> {progressDialog.hide()}
             }
         }
+        homeViewModel.localData.observe(viewLifecycleOwner){
+                         adapter = FavRecyclerView(it)
+                         binding.homeRV.layoutManager = manager
+                         binding.homeRV.adapter = adapter
+                     }
         homeViewModel.homeData.observe(viewLifecycleOwner) {
             when (it) {
                 is ApiState.Success<*> -> {
                     var list = it.date as List<Articles>
                     print(list)
-                    adapter = FavRecyclerView(list)
+                    adapter = FavRecyclerView(list,this)
                     binding.homeRV.layoutManager = manager
                     binding.homeRV.adapter = adapter
                 }
                 is ApiState.Failure -> {
-                    Toast.makeText(requireContext(), it.err.message, Toast.LENGTH_LONG).show()
-                    homeViewModel.getOfflineData()
-                    homeViewModel.localData.observe(viewLifecycleOwner) {
-                        adapter = FavRecyclerView(it)
-                        binding.homeRV.layoutManager = manager
-                        binding.homeRV.adapter = adapter
-                    }
+                    lastRequest = false
+                    Toast.makeText(requireContext(),it.err.message, Toast.LENGTH_LONG).show()
+                     homeViewModel.getOfflineData()
+                     
                     //progressDialog.hide()
                 }
                 else -> {}
@@ -126,6 +160,55 @@ class HomeFragment : Fragment() {
     fun navigateTologinScreen(){
         (activity as MainActivity).navigateToLoginScreen()
     }
+    override fun navigateToHomeScreen(articles: Articles){
+        val args = Bundle()
+        args.putString("articel", parseToJson(articles))
+        var detailsFragment  = DetailsFragment()
+        detailsFragment.arguments = args
+        var transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,detailsFragment)
+            .commit()
+    }
 
+    fun retry(){
+        //calling setting data ()
+        // Ahmead's Logic here
+        Log.i("Retray","Done")
+        homeViewModel.getNewsData()
+
+    }
+
+
+    fun showInternetDialog() {
+        val retry = "Retray"
+        val builder = AlertDialog.Builder(context)
+        val message = "There Is No Internet Connection, Please Press Retry"
+        builder.setMessage(Html.fromHtml("<font color='#0000'>$message</font>"))
+        val title ="Check Conniction"
+        builder.setTitle(Html.fromHtml("<font color='#0000'>$title</font>"))
+        builder.setCancelable(false)
+        builder.setPositiveButton(Html.fromHtml("<font color='#0000'>$retry</font>"),
+            { dialog: DialogInterface?, which: Int ->
+               retry()
+            })
+
+
+        val alertDialog = builder.create()
+
+        alertDialog.show()
+    }
+
+
+    fun parseToJson(articles: Articles):String{
+        val json = JSONObject()
+        json.put("author", articles.author);
+        json.put("title", articles.title)
+        json.put("content", articles.content)
+        json.put("urlToImage", articles.urlToImage)
+        json.put("publishedAt", articles.publishedAt)
+        return  json.toString()
+    }
+
+ 
 
 }
