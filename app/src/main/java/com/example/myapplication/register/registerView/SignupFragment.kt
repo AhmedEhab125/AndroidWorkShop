@@ -10,7 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSignupBinding
 import com.example.myapplication.model.ApiState
+import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
+import com.example.myapplication.model.SignUpModel
+import com.example.myapplication.network.RemoteSource
+import com.example.myapplication.network.RemoteSourceInter
 import com.example.myapplication.register.model.RegesterReposatry
 import com.example.myapplication.register.model.RegisterUser
 import com.example.myapplication.register.model.UserInfoDataSource
@@ -44,7 +48,7 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        registerFactory = RegisterViewModelFactory(RegesterReposatry())
+        registerFactory = RegisterViewModelFactory(Repository(RemoteSource()))
         registerModel =
             ViewModelProvider(requireActivity(), registerFactory).get(RegisterViewModel::class.java)
 
@@ -89,7 +93,7 @@ class SignupFragment : Fragment() {
                 isFalid = false
             }
             if (isFalid) {
-                var user = RegisterUser(userName, userEmail, userPassword, true)
+                var user = SignUpModel(userEmail, userPassword, userName, true)
                 registerModel.getRegesterValidation(user)
 
             }

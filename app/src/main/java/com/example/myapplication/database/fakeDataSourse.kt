@@ -15,4 +15,10 @@ class fakeDataSourse :DataBaseInter {
         )
         return listOf(data , data , data , data , data,data,data,data)
     }
+
+    override fun saveArtivles(articles: Articles) {
+        TODO("Not yet implemented")
+    }
+
+
 }
