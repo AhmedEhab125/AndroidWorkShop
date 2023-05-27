@@ -16,8 +16,12 @@ class Repository(var remoteSourceInter: RemoteSourceInter) :RepositoryInterface 
 
     }
 
-    override suspend fun getUserNameAndPassword(userName: String, password: String): ApiState {
-        TODO("Not yet implemented")
+    override suspend fun loginUser(loginUserBody: LoginUserModel): ApiState {
+        return try {
+            ApiState.Success (remoteSourceInter.loginUser(loginUserBody))
+        }catch (e : java.lang.Exception){
+            ApiState.Failure(e)
+        }
     }
 
 

@@ -13,11 +13,12 @@ import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.model.SignUpModel
-import com.example.myapplication.network.RemoteSource
+
 import com.example.myapplication.network.RemoteSourceInter
 import com.example.myapplication.register.model.RegesterReposatry
 import com.example.myapplication.register.model.RegisterUser
 import com.example.myapplication.register.model.UserInfoDataSource
+import com.example.myapplication.register.network.RemoteSource
 import com.example.myapplication.register.registerViewModel.RegisterViewModel
 import com.example.myapplication.register.registerViewModel.RegisterViewModelFactory
 import com.example.myapplication.utility.RegisterValidation

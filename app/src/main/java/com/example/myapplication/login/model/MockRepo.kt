@@ -4,12 +4,12 @@ import com.example.myapplication.login.loginView.LoginUser
 import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.delay
 
-class MockRepo:RepositoryInterface {
-    override suspend fun registerUser(requestBody: SignUpModel): ApiState {
+class MockRepo {
+     suspend fun registerUser(requestBody: SignUpModel): ApiState {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserNameAndPassword(userName:String,password:String): ApiState {
+     suspend fun getUserNameAndPassword(userName:String,password:String): ApiState {
        delay(1000)
         return if(userName == "Essam" && password == "1234")
             ApiState.Success(RetriveData())
