@@ -70,6 +70,7 @@
         <View
             android:layout_width="320dp"
             android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
             android:background="#C36E6E6E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
