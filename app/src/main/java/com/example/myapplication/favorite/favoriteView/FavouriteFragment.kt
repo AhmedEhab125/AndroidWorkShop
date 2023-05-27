@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentFavouriteBinding
+
+
 import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.home.homeView.Comunicator
 import com.example.myapplication.model.Articles
@@ -28,10 +30,11 @@ class FavouriteFragment : Fragment() , Comunicator {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favAdapter = FavRecyclerView(listOf())
+        favAdapter = FavRecyclerView(listOf(),this)
         binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
         favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
+
     }
 
     override fun navigateToDetalisScreen(articles: Articles) {
@@ -41,6 +44,7 @@ class FavouriteFragment : Fragment() , Comunicator {
         detailsFragment.arguments = args
         var transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,detailsFragment)
+             transaction.addToBackStack(null)
             .commit()
     }
 

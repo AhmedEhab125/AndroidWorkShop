@@ -22,8 +22,10 @@ import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.databinding.FragmentHomeBinding
+
 import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
+import com.example.myapplication.favorite.favoriteView.FavouriteFragment
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
 import com.example.myapplication.home.model.NewsRepo
@@ -63,6 +65,11 @@ class HomeFragment : Fragment(),Comunicator {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.showFavFAB.setOnClickListener {
+            moveToFavScreen()
+        }
+
+
         networkObservation = NetworkConectivityObserver(requireContext())
          lifecycleScope.launch {
              networkObservation.observeOnNetwork().collectLatest {
@@ -152,6 +159,15 @@ class HomeFragment : Fragment(),Comunicator {
             }
         }
     }
+
+    private fun moveToFavScreen() {
+        var favFragment  = FavouriteFragment()
+        var transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,favFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun clearUserData(){
         homeViewModel.clearCashedData()
          UserInfoDataSource().deleteCash(requireContext(), RetriveData())
