@@ -5,7 +5,7 @@ import com.example.myapplication.network.RetrofitClass
 
 class NewsClinet: NewsRemoteDataInterface {
 
-    override fun getNewsFromApi(): NewsResponse? {
+    override suspend fun getNewsFromApi(): NewsResponse? {
         return RetrofitClass.myApiService.api_service.getNewsFromApi()
     }
 }
