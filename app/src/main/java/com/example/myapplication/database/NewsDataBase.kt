@@ -10,7 +10,7 @@ import com.example.myapplication.model.Articles
 import com.example.myapplication.register.model.FavouriteArticles
 
 class NewsDataBase {
-    @Database(entities = arrayOf(Articles::class, FavouriteArticles::class), version = 4)
+    @Database(entities = arrayOf(Articles::class, FavouriteArticles::class), version = 1)
 
     abstract class ArticlesDataBase : RoomDatabase() {
         abstract fun articles (): ArticlesDao
@@ -21,7 +21,7 @@ class NewsDataBase {
             fun getInstance (context: Context): ArticlesDataBase {
                 return INSTANCE ?: synchronized(this){
                     var instance = Room.databaseBuilder(
-                        context.applicationContext, ArticlesDataBase::class.java ,"Articles").build()
+                        context.applicationContext, ArticlesDataBase::class.java ,"Articles").fallbackToDestructiveMigration().build()
                     INSTANCE =instance
                     instance
                 }

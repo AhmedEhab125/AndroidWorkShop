@@ -4,8 +4,7 @@ import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.model.Articles
 import com.example.myapplication.register.model.FavouriteArticles
 
-class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase
-) : DataSourceInter {
+class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase) :DataSourceInter {
     override suspend fun getAllSavedArticles(): List<Articles> {
         return articlesDataBase.articles().getAllArticles()
 
@@ -20,16 +19,19 @@ class DataBaseRepo(var articlesDataBase: NewsDataBase.ArticlesDataBase
         return articlesDataBase.articles().getAllFavouriteArticles()
     }
 
+    override suspend fun saveArtivles(articles: List<Articles>) {
+        articlesDataBase.articles().insertArticle(articles)
+    }
+
+
     override suspend fun saveArticleRequest(articles: List<Articles>) {
-        articles.forEach { article ->
-            articlesDataBase.articles().insertArticle(article)
-        }
+        articlesDataBase.articles().insertArticle(articles)
     }
 
     override suspend fun deleteUnfavouriteData() {
 
         articlesDataBase.articles().deleteAllUnFavouriteArticles()
+
+
     }
-
-
 }
