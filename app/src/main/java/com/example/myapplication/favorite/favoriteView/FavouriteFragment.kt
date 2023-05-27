@@ -11,16 +11,24 @@ import com.example.myapplication.R
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentFavouriteBinding
+import com.example.myapplication.details.detailsView.DetailsFragment
 import com.example.myapplication.favorite.favoriteViewModel.FavViewModelFactory
 import com.example.myapplication.favorite.favoriteViewModel.FavoriteViewModel
+import com.example.myapplication.home.homeView.Comunicator
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
 import com.example.myapplication.home.model.NewsRepo
 import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
 import com.example.myapplication.model.Articles
 import com.example.myapplication.register.model.FavouriteArticles
+import org.json.JSONObject
+import com.example.myapplication.details.detailsView.DetailsFragment
+import com.example.myapplication.home.homeView.Comunicator
+import com.example.myapplication.model.Articles
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
-class FavouriteFragment : Fragment() ,AddtoFavouite{
+class FavouriteFragment : Fragment(),AddtoFavouite, Comunicator {
     lateinit var binding: FragmentFavouriteBinding
     lateinit var favAdapter :FavRecyclerView
     private lateinit var favFactory: FavViewModelFactory
@@ -43,10 +51,9 @@ class FavouriteFragment : Fragment() ,AddtoFavouite{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favAdapter = FavRecyclerView(listOf(),this)
-
+        binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
         favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
-        favViewModel.getFavData()
         favViewModel.favData.observe(viewLifecycleOwner){list->
             var articlesList = mutableListOf<Articles>()
             list.forEach {
@@ -56,11 +63,32 @@ class FavouriteFragment : Fragment() ,AddtoFavouite{
             favAdapter.setArticlsList(articlesList)
         }
     }
-
     override fun add(articles: Articles) {
-    favViewModel.removeFavData(
-        FavouriteArticles(articles.source,articles.author,articles.title
-    ,articles.discription,articles.url,articles.urlToImage,articles.publishedAt,articles.content)
-    )
+        favViewModel.removeFavData(
+            FavouriteArticles(articles.source,articles.author,articles.title
+                ,articles.discription,articles.url,articles.urlToImage,articles.publishedAt,articles.content)
+        )
+    }
+    override fun navigateToDetalisScreen(articles: Articles) {
+        val args = Bundle()
+        args.putString("articel", parseToJson(articles))
+        var detailsFragment  = DetailsFragment()
+        detailsFragment.arguments = args
+        var transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,detailsFragment)
+        transaction.addToBackStack(null)
+            .commit()
+    }
+
+
+
+    fun parseToJson(articles: Articles):String{
+        val json = JSONObject()
+        json.put("author", articles.author);
+        json.put("title", articles.title)
+        json.put("content", articles.content)
+        json.put("urlToImage", articles.urlToImage)
+        json.put("publishedAt", articles.publishedAt)
+        return  json.toString()
     }
 }

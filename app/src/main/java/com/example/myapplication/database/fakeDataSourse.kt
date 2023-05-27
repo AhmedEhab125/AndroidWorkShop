@@ -1,29 +1,47 @@
 package com.example.myapplication.database
 
+import android.content.Context
+import com.example.myapplication.database.ArticlesDao.ArticlesDao
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsSource
+import com.example.myapplication.register.model.FavouriteArticles
+import kotlinx.coroutines.Dispatchers
 
-class fakeDataSourse : DataBaseInter {
-    override fun getSavedArticles(): List<Articles> {
-        var title = "CNN"
-        var discription =
-            "Why TikTok is taking months to delete personal US user data from servers outside its Project Texas firewalls, even as its political standing sours"
-        var date = "Feb 26, 2023, 16.32 PM"
-
-        var img =
-            "https://s.yimg.com/uu/api/res/1.2/LKRH31mzL9wqtcqoQ_lkjw--~B/Zmk9ZmlsbDtoPTYzMDtweW9mZj0wO3c9MTIwMDthcHBpZD15dGFjaHlvbg--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2023-04/835a5670-e5f4-11ed-9db6-3febf57b7a4a.cf.jpg"
-        var data = Articles(
-            NewsSource("1", title), "ahmed",
-            title, discription, "", img, date, ""
-        )
-        return listOf(data, data, data, data, data, data, data, data)
+class fakeDataSourse(context: Context) : DataBaseInter {
+    companion object{
+        private var myInstance:fakeDataSourse? = null
+        fun getInstance(ctx: Context):fakeDataSourse?{
+            if(myInstance==null)
+                myInstance = fakeDataSourse(ctx)
+            return myInstance
+        }
     }
 
-    override fun saveArtivles(articles: Articles) {
+    val myArticleDoa: ArticlesDao by lazy {
+        context.let { NewsDataBase.ArticlesDataBase.getInstance(it).articles() }
+    }
+    override suspend fun getSavedArticles(): List<Articles> {
+        return with(Dispatchers.IO){ myArticleDoa.getAllArticles()}
     }
 
-    override fun getFavouriteArticles(): List<Articles> {
-        return listOf()
+    override suspend fun saveArtivles(articles: List<Articles>) {
+        myArticleDoa?.insertArticle(articles)
+    }
+
+    override suspend fun saveFavArtivles(articles: FavouriteArticles) {
+        myArticleDoa?.insertFavArticle(articles)
+    }
+
+    override suspend fun saveArticleRequest(articles: List<Articles>) {
+        myArticleDoa?.insertArticle(articles)
+    }
+
+    override suspend fun deleteUnfavouriteData() {
+        myArticleDoa.deleteAllUnFavouriteArticles()
+    }
+
+    override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
+        return myArticleDoa.getAllFavouriteArticles()
     }
 
 

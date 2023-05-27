@@ -13,49 +13,47 @@ import com.example.myapplication.model.NewsResponse
 import com.example.myapplication.network.RetrofitClass
 import com.example.myapplication.register.model.FavouriteArticles
 
-class NewsRepo(var rs: NewsClinet, var articlesDataBase: NewsDataBase.ArticlesDataBase) :
-    NewsRepoInterface {
-    var remoteSource: NewsRemoteDataInterface = rs
-    var localSource: DataBaseInter = fakeDataSourse()
-    override suspend fun getNewsFromApi(): ApiState {
-        return try {
-            ApiState.Success(remoteSource.getNewsFromApi()?.articles)
-        } catch (e: Exception) {
-            ApiState.Failure(e)
-        }
+class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoInterface {
+    var remoteSource:NewsRemoteDataInterface = rs
+    var localSource: DataBaseInter = articlesDataBase
+     override suspend fun getNewsFromApi():ApiState {
+         return try{
+             val date = remoteSource.getNewsFromApi()?.articles
+             insertIntoDataBase(date!!)
+             ApiState.Success(date)
+         }catch (e:Exception){
+             e.printStackTrace()
+             ApiState.Failure(e)
+         }
     }
 
     override suspend fun getLocalData(): List<Articles> {
         return localSource.getSavedArticles()
     }
 
-    override suspend fun deleteArticel(favouriteArticles: FavouriteArticles) {
-        articlesDataBase.articles().deleteArticle(favouriteArticles)
+    override suspend fun insertIntoDataBase(articles: List<Articles>) {
+       localSource.saveArtivles(articles)
     }
 
     override suspend fun getAllSavedArticles(): List<Articles> {
-        return articlesDataBase.articles().getAllArticles()
+        return localSource.getSavedArticles()
 
     }
 
     override suspend fun saveFavArtivles(articles: FavouriteArticles) {
-        articlesDataBase.articles().insertFavArticle(articles)
+        localSource.saveFavArtivles(articles)
     }
 
     override suspend fun getFavouriteArticles(): List<FavouriteArticles> {
 
-        return articlesDataBase.articles().getAllFavouriteArticles()
+        return localSource.getFavouriteArticles()
     }
 
     override suspend fun saveArticleRequest(articles: List<Articles>) {
-        articles.forEach { article ->
-            articlesDataBase.articles().insertArticle(article)
-        }
+            localSource.saveArtivles(articles)
     }
-
     override suspend fun deleteUnfavouriteData() {
-
-        articlesDataBase.articles().deleteAllUnFavouriteArticles()
+        localSource.deleteUnfavouriteData()
     }
 
     override suspend fun getFilteredArticles(filterOPerator: String) :ApiState {
@@ -67,5 +65,9 @@ class NewsRepo(var rs: NewsClinet, var articlesDataBase: NewsDataBase.ArticlesDa
            ApiState.Failure(e)
        }
 
+    }
+
+    override suspend fun saveArtivles(articles: List<Articles>) {
+        localSource.saveArtivles(articles)
     }
 }

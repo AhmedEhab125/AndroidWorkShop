@@ -33,7 +33,6 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
             _localData.postValue(repo.getLocalData())
             isLoading.postValue(false)
         }
-
     }
     fun filterWithKey(filterOperator:String){
         isLoading.postValue(true)
@@ -57,5 +56,6 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
         }
         }
     }
+
 
 }
