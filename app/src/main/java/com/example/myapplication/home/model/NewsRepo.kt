@@ -8,7 +8,7 @@ import com.example.myapplication.model.NewsResponse
 class NewsRepo(var rs:NewsClinet):NewsRepoInterface {
     var remoteSource:NewsRemoteDataInterface = rs
 
-     override fun getNewsFromApi():ApiState {
+     override suspend fun getNewsFromApi():ApiState {
          return try{
              ApiState.Success(remoteSource.getNewsFromApi())
          }catch (e:Exception){

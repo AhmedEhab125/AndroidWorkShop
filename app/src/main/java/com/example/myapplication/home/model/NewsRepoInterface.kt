@@ -4,5 +4,5 @@ import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterfa
 import com.example.myapplication.model.ApiState
 
 interface NewsRepoInterface {
-    fun getNewsFromApi(): ApiState
+    suspend fun getNewsFromApi(): ApiState
 }
