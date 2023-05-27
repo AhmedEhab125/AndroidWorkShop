@@ -2,7 +2,7 @@ package com.example.myapplication.network
 
 import com.example.myapplication.home.newsOnlineDataSource.NewsApiService
 import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
-import com.example.myapplication.register.network.ApiService
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
