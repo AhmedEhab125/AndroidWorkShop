@@ -13,5 +13,5 @@ import retrofit2.http.POST
 interface ApiService {
 
     @POST("/v1/accounts:signUp?key=AIzaSyAVRNpZKTubdM9mp3L9HaE8XGj09eNoV1o")
-    fun registerUser(@Body requestBody: SignUpModel) :Call<RetriveData>
+   suspend fun registerUser(@Body requestBody: SignUpModel) :RetriveData
 }

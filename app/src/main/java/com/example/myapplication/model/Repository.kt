@@ -7,8 +7,13 @@ import kotlinx.coroutines.flow.flowOf
 
 class Repository(var remoteSourceInter: RemoteSourceInter) :RepositoryInterface {
 
-    override suspend fun registerUser(requestBody: SignUpModel): RetriveData {
-       return remoteSourceInter.registerUser(requestBody)
+    override suspend fun registerUser(requestBody: SignUpModel): ApiState {
+        return try {
+            ApiState.Success (remoteSourceInter.registerUser(requestBody))
+        }catch (e : java.lang.Exception){
+            ApiState.Failure(e)
+        }
+
     }
 
     override suspend fun getUserNameAndPassword(userName: String, password: String): ApiState {
