@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentLoginBinding
 import com.example.myapplication.home.homeViewModel.HomeViewModel
 import com.example.myapplication.home.homeViewModel.HomeViewModelFactory
@@ -22,6 +24,7 @@ import com.example.myapplication.model.NewsResponse
 import com.example.myapplication.model.Repository
 import com.example.myapplication.model.RetriveData
 import com.example.myapplication.register.model.UserInfoDataSource
+import com.example.myapplication.register.registerView.SignupFragment
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -38,6 +41,16 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    binding.signupBtn.setOnClickListener {
+        var signupFragment : SignupFragment = SignupFragment()
+        var transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainerView,signupFragment)
+            .commit()
+    }
+
+
+
         super.onViewCreated(view, savedInstanceState)
         factory = LoginViewModelFactory(MockRepo())
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)

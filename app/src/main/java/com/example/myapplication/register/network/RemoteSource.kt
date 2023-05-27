@@ -9,6 +9,5 @@ class RemoteSource : RemoteSourceInter {
     override suspend fun registerUser(requestBody: SignUpModel) : RetriveData {
 
     return   RetrofitClass.getInstance().registerUser(requestBody =requestBody ).execute().body()!!
-
     }
 }
