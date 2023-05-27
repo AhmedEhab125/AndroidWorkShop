@@ -10,22 +10,25 @@ import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterfa
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsResponse
+import com.example.myapplication.network.RetrofitClass
 import com.example.myapplication.register.model.FavouriteArticles
 
-class NewsRepo(var rs:NewsClinet,var articlesDataBase: NewsDataBase.ArticlesDataBase):NewsRepoInterface,DataSourceInter {
-    var remoteSource:NewsRemoteDataInterface = rs
+class NewsRepo(var rs: NewsClinet, var articlesDataBase: NewsDataBase.ArticlesDataBase) :
+    NewsRepoInterface {
+    var remoteSource: NewsRemoteDataInterface = rs
     var localSource: DataBaseInter = fakeDataSourse()
-     override suspend fun getNewsFromApi():ApiState {
-         return try{
-             ApiState.Success(remoteSource.getNewsFromApi()?.articles)
-         }catch (e:Exception){
-             ApiState.Failure(e)
-         }
+    override suspend fun getNewsFromApi(): ApiState {
+        return try {
+            ApiState.Success(remoteSource.getNewsFromApi()?.articles)
+        } catch (e: Exception) {
+            ApiState.Failure(e)
+        }
     }
 
     override suspend fun getLocalData(): List<Articles> {
         return localSource.getSavedArticles()
     }
+
     override suspend fun getAllSavedArticles(): List<Articles> {
         return articlesDataBase.articles().getAllArticles()
 
@@ -49,5 +52,16 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase: NewsDataBase.ArticlesData
     override suspend fun deleteUnfavouriteData() {
 
         articlesDataBase.articles().deleteAllUnFavouriteArticles()
+    }
+
+    override suspend fun getFilteredArticles(filterOPerator: String) :ApiState {
+       return try {
+           ApiState.Success(rs.getFilteredArticles(filterOPerator).articles)
+       }catch (e :Exception){
+           println(e)
+           println("faiilllllllllllllllllllllllllllllllll")
+           ApiState.Failure(e)
+       }
+
     }
 }

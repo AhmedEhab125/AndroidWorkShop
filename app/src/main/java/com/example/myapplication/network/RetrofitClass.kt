@@ -22,6 +22,7 @@ class RetrofitClass {
             return newsInstance
         }
     }
+    //" https://newsapi.org/v2/everything?q=apple&apiKey=53adbd1111984d2aaf607f462d3e85e0"
 
     object NewsRetrofit {
         val retrofit: Retrofit =

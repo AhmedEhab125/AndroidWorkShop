@@ -6,11 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.example.myapplication.MainActivity
 import com.example.myapplication.database.NewsDataBase
 import com.example.myapplication.databinding.FragmentHomeBinding
 import com.example.myapplication.favorite.favoriteView.FavRecyclerView
@@ -20,6 +23,8 @@ import com.example.myapplication.home.model.NewsRepo
 import com.example.myapplication.home.newsOnlineDataSource.NewsClinet
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
+import com.example.myapplication.model.RetriveData
+import com.example.myapplication.register.model.UserInfoDataSource
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -51,8 +56,8 @@ class HomeFragment : Fragment() {
                 else -> {progressDialog.hide()}
             }
         }
-        homeViewModel.homeData.observe(viewLifecycleOwner){
-            when(it){
+        homeViewModel.homeData.observe(viewLifecycleOwner) {
+            when (it) {
                 is ApiState.Success<*> -> {
                     var list = it.date as List<Articles>
                     print(list)
@@ -61,20 +66,65 @@ class HomeFragment : Fragment() {
                     binding.homeRV.adapter = adapter
                 }
                 is ApiState.Failure -> {
-                    Toast.makeText(requireContext(),it.err.message, Toast.LENGTH_LONG).show()
-                     homeViewModel.getOfflineData()
-                     homeViewModel.localData.observe(viewLifecycleOwner){
-                         adapter = FavRecyclerView(it)
-                         binding.homeRV.layoutManager = manager
-                         binding.homeRV.adapter = adapter
-                     }
+                    Toast.makeText(requireContext(), it.err.message, Toast.LENGTH_LONG).show()
+                    homeViewModel.getOfflineData()
+                    homeViewModel.localData.observe(viewLifecycleOwner) {
+                        adapter = FavRecyclerView(it)
+                        binding.homeRV.layoutManager = manager
+                        binding.homeRV.adapter = adapter
+                    }
                     //progressDialog.hide()
                 }
                 else -> {}
             }
+            homeViewModel.searchData.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ApiState.Success<*> -> {
+                        var list = it.date as List<Articles>
+                        print(list)
+                        adapter = FavRecyclerView(list)
+                        binding.homeRV.layoutManager = manager
+                        binding.homeRV.adapter = adapter
+                    }
+                    is ApiState.Failure -> {
+                        Toast.makeText(requireContext(), it.err.message, Toast.LENGTH_LONG).show()
+
+                    }
+                    else -> {}
+                }
+            }
+
+            binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        homeViewModel.filterWithKey(query)
+                    } else {
+                        homeViewModel.getNewsData()
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText != null && newText.length > 0) {
+                        homeViewModel.filterWithKey(newText)
+                    } else {
+                        homeViewModel.getNewsData()
+                    }
+                    return true
+                }
+            })
+            binding.ivLogout.setOnClickListener {
+                clearUserData()
+            }
         }
-
-
+    }
+    fun clearUserData(){
+        homeViewModel.clearCashedData()
+         UserInfoDataSource().deleteCash(requireContext(), RetriveData())
+        navigateTologinScreen()
+    }
+    fun navigateTologinScreen(){
+        (activity as MainActivity).navigateToLoginScreen()
     }
 
 
