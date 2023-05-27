@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-
-
-
     }
-
 
     fun navigateToHomeScreen(){
         var homeFragment  = HomeFragment()
