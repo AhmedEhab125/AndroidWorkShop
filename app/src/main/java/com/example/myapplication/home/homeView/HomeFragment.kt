@@ -112,7 +112,7 @@ class HomeFragment : Fragment(),Comunicator {
 
 
     }
-    override fun navigateToHomeScreen(articles: Articles){
+    override fun navigateToDetalisScreen(articles: Articles){
         val args = Bundle()
         args.putString("articel", parseToJson(articles))
         var detailsFragment  = DetailsFragment()
