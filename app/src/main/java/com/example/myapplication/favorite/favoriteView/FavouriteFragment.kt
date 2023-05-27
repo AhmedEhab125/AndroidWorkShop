@@ -10,7 +10,13 @@ import com.example.myapplication.R
 import com.example.myapplication.database.fakeDataSourse
 import com.example.myapplication.databinding.FragmentFavouriteBinding
 
-class FavouriteFragment : Fragment(){
+
+import com.example.myapplication.details.detailsView.DetailsFragment
+import com.example.myapplication.home.homeView.Comunicator
+import com.example.myapplication.model.Articles
+import org.json.JSONObject
+
+class FavouriteFragment : Fragment() , Comunicator {
     lateinit var binding: FragmentFavouriteBinding
     lateinit var favAdapter :FavRecyclerView
     override fun onCreateView(
@@ -24,9 +30,33 @@ class FavouriteFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favAdapter = FavRecyclerView(listOf())
+        favAdapter = FavRecyclerView(listOf(),this)
         binding.rvFavNews.adapter =  favAdapter
         binding.rvFavNews.layoutManager = LinearLayoutManager(requireContext())
-        fakeDataSourse().getSavedArticles()?.let { favAdapter.setArticlsList(it) }
+        favAdapter.setArticlsList(fakeDataSourse().getSavedArticles())
+
+    }
+
+    override fun navigateToDetalisScreen(articles: Articles) {
+        val args = Bundle()
+        args.putString("articel", parseToJson(articles))
+        var detailsFragment  = DetailsFragment()
+        detailsFragment.arguments = args
+        var transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,detailsFragment)
+             transaction.addToBackStack(null)
+            .commit()
+    }
+
+
+
+    fun parseToJson(articles: Articles):String{
+        val json = JSONObject()
+        json.put("author", articles.author);
+        json.put("title", articles.title)
+        json.put("content", articles.content)
+        json.put("urlToImage", articles.urlToImage)
+        json.put("publishedAt", articles.publishedAt)
+        return  json.toString()
     }
 }

@@ -10,6 +10,7 @@ import com.example.myapplication.home.newsOnlineDataSource.NewsRemoteDataInterfa
 import com.example.myapplication.model.ApiState
 import com.example.myapplication.model.Articles
 import com.example.myapplication.model.NewsResponse
+import com.example.myapplication.network.RetrofitClass
 import com.example.myapplication.register.model.FavouriteArticles
 
 class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoInterface {
@@ -26,7 +27,7 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
          }
     }
 
-    override suspend fun getLocalData(): List<Articles>? {
+    override suspend fun getLocalData(): List<Articles> {
         return localSource.getSavedArticles()
     }
 
@@ -53,5 +54,16 @@ class NewsRepo(var rs:NewsClinet,var articlesDataBase:fakeDataSourse):NewsRepoIn
     }
     override suspend fun deleteUnfavouriteData() {
         localSource.deleteUnfavouriteData()
+    }
+
+    override suspend fun getFilteredArticles(filterOPerator: String) :ApiState {
+       return try {
+           ApiState.Success(rs.getFilteredArticles(filterOPerator).articles)
+       }catch (e :Exception){
+           println(e)
+           println("faiilllllllllllllllllllllllllllllllll")
+           ApiState.Failure(e)
+       }
+
     }
 }

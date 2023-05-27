@@ -38,7 +38,6 @@ class FavRecyclerView(var newsList: List<Articles>,var onClick : Comunicator? = 
             Glide.with(binding.root).load(articles.urlToImage).into(binding.ivFavNews)
             binding.root.setOnClickListener {
                 onClick?.navigateToHomeScreen(articles)
-                print("clicked")
             }
         }
     }

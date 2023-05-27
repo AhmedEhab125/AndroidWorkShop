@@ -17,6 +17,9 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var _localData: MutableLiveData<List<Articles>> = MutableLiveData()
     val localData:LiveData<List<Articles>> = _localData
+    private var _searchData: MutableLiveData<ApiState> = MutableLiveData()
+    val searchData: LiveData<ApiState> = _homeData
+
     fun getNewsData(){
         isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
@@ -28,6 +31,19 @@ class HomeViewModel (private val repo: NewsRepoInterface): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _localData.postValue(repo.getLocalData())
             isLoading.postValue(false)
+        }
+    }
+    fun filterWithKey(filterOperator:String){
+        isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            _searchData.postValue(repo.getFilteredArticles(filterOperator))
+            isLoading.postValue(false)
+        }
+
+    }
+    fun clearCashedData(){
+        viewModelScope.launch(Dispatchers.IO) {
+        repo.deleteUnfavouriteData()
         }
     }
 
